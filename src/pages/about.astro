@@ -1,0 +1,95 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const values = [
+  {
+    title: 'Strategy first',
+    body: 'We never design in a vacuum. Every choice traces back to a goal.',
+  },
+  {
+    title: 'Senior craft',
+    body: 'No handoffs to juniors. The people you meet are the people who build.',
+  },
+  {
+    title: 'Modern speed',
+    body: 'AI handles the busywork so we move faster without cutting quality.',
+  },
+  {
+    title: 'Real partnership',
+    body: 'Clear communication, honest timelines, and work we both stand behind.',
+  },
+];
+---
+
+<PageLayout
+  title="About — Dunn Creative"
+  description="An independent creative studio pairing senior craft with an AI-accelerated workflow."
+  heroLabel="About"
+  heroTitle="A small studio with a modern engine."
+  heroSubtitle="We're built for founders and teams who want studio-grade work without studio-grade timelines."
+>
+  <!-- Intro -->
+  <section class="section-sm">
+    <div class="container-narrow prose fade-up">
+      <p>
+        Dunn Creative is an independent studio working at the intersection of
+        brand, web, and content. We started with a simple conviction: the old
+        agency model is slow, expensive, and bloated — and most of that bloat
+        has nothing to do with the quality of the work.
+      </p>
+      <p>
+        So we built something leaner. Senior people doing the actual work, paired
+        with an AI-accelerated workflow that strips out the busywork. The result
+        is a studio that ships faster, charges fairly, and still cares deeply
+        about craft.
+      </p>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <h2 class="fade-up text-2xl">What we believe</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((v) => (
+          <div class="card-base fade-up p-6">
+            <h3 class="text-lg">{v.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="section-sm border-t border-line">
+    <div class="container grid gap-10 md:grid-cols-[280px_1fr] md:items-center">
+      <div
+        class="fade-up aspect-square w-full rounded-card border border-line bg-surface-2"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="fade-up">
+        <h2 class="text-2xl">Founder</h2>
+        <p class="mt-4 prose">
+          <!-- TODO: replace with the real founder bio. -->
+          Dunn Creative is led by its founder, a designer and strategist with
+          [X] years building brands across [industries]. After years inside
+          larger agencies, they started Dunn Creative to prove that a small,
+          modern studio could out-ship the big shops — and do it with more care.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section class="section-sm border-t border-line">
+    <div class="container-narrow fade-up text-center">
+      <p class="text-ink-soft">
+        Based remotely · working with clients everywhere. We reply within one
+        business day.
+      </p>
+      <a href="/contact" class="btn btn-primary mt-6">Start a project</a>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,211 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const process = [
+  { n: '01', text: 'You send a few details about your project.' },
+  { n: '02', text: 'We reply within one business day with next steps.' },
+  { n: '03', text: 'A short call to align on scope, timeline, and budget.' },
+  { n: '04', text: 'A clear proposal — and we get to work.' },
+];
+---
+
+<PageLayout
+  title="Contact — Dunn Creative"
+  description="Tell us about your project. We reply within one business day."
+  heroLabel="Contact"
+  heroTitle="Let's talk about what you're building."
+  heroSubtitle="The more you tell us, the sharper our first reply will be."
+>
+  <section class="section-sm">
+    <div class="container grid gap-12 lg:grid-cols-[3fr_2fr]">
+      <!-- Form -->
+      <div class="fade-up">
+        <form id="contact-form" class="flex flex-col gap-5" novalidate>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="field">
+              <span>Name</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Company <em>(optional)</em></span>
+            <input type="text" name="company" autocomplete="organization" />
+          </label>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="field">
+              <span>Service</span>
+              <select name="service">
+                <option value="">Select one…</option>
+                <option>Brand Identity</option>
+                <option>Web & Digital</option>
+                <option>Content & AI</option>
+                <option>Presentations</option>
+                <option>Strategy</option>
+                <option>Retainers</option>
+                <option>Launch Kit</option>
+                <option>Volume Creative</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Budget</span>
+              <select name="budget">
+                <option value="">Select one…</option>
+                <option>Under $5k</option>
+                <option>$5k – $15k</option>
+                <option>$15k – $40k</option>
+                <option>$40k+</option>
+                <option>Ongoing / retainer</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Project details</span>
+            <textarea name="message" rows="6" required></textarea>
+          </label>
+
+          <button type="submit" class="btn btn-primary self-start">
+            Send message
+          </button>
+
+          <p id="form-status" class="hidden text-sm" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="fade-up flex flex-col gap-8">
+        <div class="card-base p-6">
+          <h2 class="text-sm uppercase tracking-wide text-ink-dim">Response time</h2>
+          <p class="mt-2 text-ink">Within one business day.</p>
+        </div>
+        <div class="card-base p-6">
+          <h2 class="text-sm uppercase tracking-wide text-ink-dim">Prefer email?</h2>
+          <a href="mailto:hello@dunncreative.net" class="mt-2 inline-block text-accent">
+            hello@dunncreative.net
+          </a>
+        </div>
+        <div>
+          <h2 class="text-sm uppercase tracking-wide text-ink-dim">What happens next</h2>
+          <ol class="mt-4 flex flex-col gap-4">
+            {process.map((p) => (
+              <li class="flex gap-4">
+                <span class="text-sm font-semibold text-accent">{p.n}</span>
+                <span class="text-sm text-ink-soft">{p.text}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .field > span {
+    font-size: var(--text-sm);
+    color: var(--color-ink-soft);
+  }
+  .field em {
+    color: var(--color-ink-dim);
+    font-style: normal;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink);
+    font: inherit;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+  #form-status.is-success {
+    color: var(--color-accent-soft);
+  }
+  #form-status.is-error {
+    color: #ff8a8a;
+  }
+</style>
+
+<script>
+  // ── Contact form handler ───────────────────────────────────────────────
+  // To go live, sign up at https://formspree.io, create a form, and either:
+  //   1. Set PUBLIC_FORMSPREE_ID in your environment, or
+  //   2. Hardcode the endpoint below.
+  // Until an ID is present, the form runs in local-dev mode and simulates a
+  // successful submission so you can test the UI without a backend.
+  const FORMSPREE_ID = ''; // e.g. 'xyzabcd'  → https://formspree.io/f/xyzabcd
+
+  const setup = () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    if (!form || !status) return;
+
+    const show = (msg: string, kind: 'success' | 'error') => {
+      status.textContent = msg;
+      status.classList.remove('hidden', 'is-success', 'is-error');
+      status.classList.add(kind === 'success' ? 'is-success' : 'is-error');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+
+      try {
+        if (FORMSPREE_ID) {
+          const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          if (!res.ok) throw new Error('Request failed');
+        } else {
+          // Local-dev simulation
+          await new Promise((r) => setTimeout(r, 700));
+        }
+        form.reset();
+        show("Thanks — your message is in. We'll reply within one business day.", 'success');
+      } catch {
+        show('Something went wrong. Please email hello@dunncreative.net instead.', 'error');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    });
+  };
+  setup();
+  document.addEventListener('astro:after-swap', setup);
+</script>

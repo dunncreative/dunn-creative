@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found — Dunn Creative"
+  description="The page you're looking for doesn't exist."
+  noindex
+>
+  <section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden">
+    <span
+      class="pointer-events-none absolute inset-0 flex items-center justify-center text-[34vw] font-bold leading-none text-surface-2 select-none"
+      aria-hidden="true"
+    >
+      404
+    </span>
+    <div class="container relative text-center">
+      <h1 class="text-3xl gradient-text">This page wandered off.</h1>
+      <p class="mx-auto mt-4 max-w-narrow text-ink-soft">
+        The link may be broken, or the page may have moved. Let's get you back on
+        track.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="btn btn-primary">Go home</a>
+        <a href="/work" class="btn btn-ghost">View our work</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

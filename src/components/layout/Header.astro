@@ -1,0 +1,75 @@
+---
+import Nav from './Nav.astro';
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300"
+>
+  <div class="container flex h-[var(--header-h)] items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight" aria-label="Dunn Creative home">
+      <span class="inline-block h-2.5 w-2.5 rounded-full bg-accent"></span>
+      Dunn&nbsp;Creative
+    </a>
+
+    <Nav />
+
+    <div class="flex items-center gap-3">
+      <a href="/contact" class="btn btn-primary hidden sm:inline-flex">
+        Start a project
+      </a>
+      <button
+        id="menu-toggle"
+        class="flex h-10 w-10 items-center justify-center rounded-sm border border-line text-ink md:hidden"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span id="menu-icon" aria-hidden="true">☰</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-line bg-bg/95 backdrop-blur-md md:hidden"
+  >
+    <div class="container py-6">
+      <Nav mobile />
+      <a href="/contact" class="btn btn-primary mt-6 w-full justify-center">
+        Start a project
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const setup = () => {
+    const header = document.getElementById('site-header');
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+
+    // Frosted glass on scroll
+    const onScroll = () => {
+      if (!header) return;
+      if (window.scrollY > 12) {
+        header.classList.add('bg-bg/80', 'backdrop-blur-md', 'border-line');
+      } else {
+        header.classList.remove('bg-bg/80', 'backdrop-blur-md', 'border-line');
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile toggle
+    toggle?.addEventListener('click', () => {
+      const open = menu?.classList.toggle('hidden') === false;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (icon) icon.textContent = open ? '✕' : '☰';
+    });
+  };
+  setup();
+  document.addEventListener('astro:after-swap', setup);
+</script>

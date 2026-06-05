@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ProjectCard from '../components/cards/ProjectCard.astro';
+
+export interface Tier {
+  name: string;
+  price: string;
+  turnaround: string;
+}
+
+export interface Props {
+  title: string;
+  tagline: string;
+  category: string;
+  description?: string;
+  deliverables?: string[];
+  tiers?: Tier[];
+  relatedProjects?: string[];
+}
+
+const {
+  title,
+  tagline,
+  category,
+  description,
+  deliverables = [],
+  tiers = [],
+  relatedProjects = [],
+} = Astro.props;
+
+const allWork = await getCollection('work');
+const related = allWork.filter((p) => relatedProjects.includes(p.slug));
+---
+
+<BaseLayout title={`${title} — Dunn Creative`} description={description ?? tagline}>
+  <section class="section-sm border-b border-line">
+    <div class="container">
+      <span class="tag tag-accent fade-up">{category}</span>
+      <h1 class="fade-up mt-5 text-4xl gradient-text">{title}</h1>
+      <p class="fade-up mt-4 max-w-narrow text-lg text-ink-soft">{tagline}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid gap-16 lg:grid-cols-[1fr_360px]">
+      <!-- Body -->
+      <div class="prose fade-up">
+        <slot />
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="flex flex-col gap-8 lg:sticky lg:top-24 lg:self-start">
+        {deliverables.length > 0 && (
+          <div class="card-base fade-up p-6">
+            <h2 class="text-sm uppercase tracking-wide text-ink-dim">
+              What's included
+            </h2>
+            <ul class="mt-4 flex flex-col gap-3">
+              {deliverables.map((item) => (
+                <li class="flex gap-3 text-sm text-ink-soft">
+                  <span class="mt-1 text-accent" aria-hidden="true">→</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {tiers.length > 0 && (
+          <div class="fade-up flex flex-col gap-4">
+            {tiers.map((t, i) => {
+              const highlighted = i === 1;
+              return (
+                <div
+                  class={`card-base p-6 ${
+                    highlighted ? 'border-accent shadow-glow' : ''
+                  }`}
+                >
+                  {highlighted && (
+                    <span class="tag tag-accent mb-3 self-start">
+                      Most popular
+                    </span>
+                  )}
+                  <h3 class="text-lg">{t.name}</h3>
+                  <p class="mt-1 text-2xl font-semibold text-ink">{t.price}</p>
+                  <p class="mt-1 text-sm text-ink-dim">{t.turnaround}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <a href="/contact" class="btn btn-primary fade-up justify-center">
+          Start a project
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section-sm border-t border-line">
+      <div class="container">
+        <h2 class="fade-up text-2xl">Related work</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          {related.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

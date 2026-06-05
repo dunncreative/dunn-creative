@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  project: CollectionEntry<'work'>;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const { title, client, year, categories, thumbnailImage, challenge } =
+  project.data;
+const href = `/work/${project.slug}`;
+---
+
+<a
+  href={href}
+  class={`card-base group overflow-hidden ${featured ? 'md:col-span-2' : ''}`}
+>
+  <div class="overflow-hidden">
+    <img
+      src={thumbnailImage}
+      alt={`${title} — ${client}`}
+      width="800"
+      height="600"
+      loading="lazy"
+      class={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+        featured ? 'aspect-[16/8]' : 'aspect-[4/3]'
+      }`}
+    />
+  </div>
+
+  <div class="p-6">
+    <div class="flex flex-wrap gap-2">
+      {categories?.map((c) => <span class="tag">{c}</span>)}
+    </div>
+    <h3 class="mt-4 text-xl text-ink">{title}</h3>
+    <p class="mt-1 text-sm text-ink-dim">{client} · {year}</p>
+    <p class="mt-3 line-clamp-2 text-sm text-ink-soft">{challenge}</p>
+
+    <span class="mt-5 flex items-center gap-1 text-sm text-accent">
+      View case study
+      <span
+        class="transition-transform duration-200 group-hover:translate-x-1"
+        aria-hidden="true"
+      >→</span>
+    </span>
+  </div>
+</a>

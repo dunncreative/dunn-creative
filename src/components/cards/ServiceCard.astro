@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  service: CollectionEntry<'services'>;
+  variant?: 'default' | 'compact';
+}
+
+const { service, variant = 'default' } = Astro.props;
+const { title, tagline, category, tiers } = service.data;
+const startingPrice = tiers?.[0]?.price;
+const href = `/services/${service.slug}`;
+const compact = variant === 'compact';
+---
+
+<a href={href} class={`card-base group ${compact ? 'p-5' : 'p-7'}`}>
+  <span class="tag self-start">{category}</span>
+  <h3 class={`mt-4 ${compact ? 'text-lg' : 'text-xl'} text-ink`}>{title}</h3>
+  <p class="mt-2 text-sm text-ink-soft">{tagline}</p>
+
+  <div class="mt-6 flex items-center justify-between">
+    {startingPrice && (
+      <span class="text-sm text-ink-dim">
+        From <span class="text-ink">{startingPrice}</span>
+      </span>
+    )}
+    <span class="flex items-center gap-1 text-sm text-accent">
+      Explore
+      <span
+        class="transition-transform duration-200 group-hover:translate-x-1"
+        aria-hidden="true"
+      >→</span>
+    </span>
+  </div>
+</a>

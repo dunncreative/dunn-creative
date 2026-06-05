@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import ServiceCard from '../../components/cards/ServiceCard.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const coreServices = services.filter((s) => s.data.category !== 'Bundle');
+const bundles = services.filter((s) => s.data.category === 'Bundle');
+
+const steps = [
+  { n: '01', title: 'Discover', body: 'We dig into your goals, audience, and the problem worth solving.' },
+  { n: '02', title: 'Define', body: 'Positioning and direction — so every creative call has a reason.' },
+  { n: '03', title: 'Design', body: 'We build the work, fast, with senior craft and AI acceleration.' },
+  { n: '04', title: 'Deliver', body: 'Files, systems, and support so your team can run with it.' },
+];
+---
+
+<PageLayout
+  title="Services — Dunn Creative"
+  description="Brand, web, content, presentations, strategy, and ongoing creative support."
+  heroLabel="Services"
+  heroTitle="Everything you need to look and sound like the leader."
+  heroSubtitle="Core services that stand alone or combine into something bigger."
+>
+  <!-- Core services -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="fade-up text-2xl">Core services</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {coreServices.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <h2 class="fade-up text-2xl">How we work</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((step) => (
+          <div class="card-base fade-up p-6">
+            <span class="text-2xl font-semibold text-accent">{step.n}</span>
+            <h3 class="mt-3 text-lg">{step.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bundles -->
+  {bundles.length > 0 && (
+    <section class="section-sm border-t border-line">
+      <div class="container">
+        <h2 class="fade-up text-2xl">Bundles</h2>
+        <p class="fade-up mt-2 text-ink-soft">
+          Coordinated packages for bigger moments — fixed scope, fixed price.
+        </p>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          {bundles.map((service) => (
+            <ServiceCard service={service} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Retainer CTA -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <div class="card-base fade-up flex flex-col items-start justify-between gap-6 border-accent p-8 md:flex-row md:items-center">
+        <div>
+          <h2 class="text-2xl">Need ongoing support?</h2>
+          <p class="mt-2 max-w-xl text-ink-soft">
+            A retainer gives you senior creative capacity every month — at a
+            predictable rate, without the headcount.
+          </p>
+        </div>
+        <a href="/services/retainers" class="btn btn-primary shrink-0">
+          Explore retainers →
+        </a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

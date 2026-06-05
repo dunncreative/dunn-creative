@@ -1,0 +1,102 @@
+---
+export interface Props {
+  mobile?: boolean;
+}
+
+const { mobile = false } = Astro.props;
+const path = Astro.url.pathname;
+
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+
+const services = [
+  { label: 'Brand Identity', href: '/services/brand-identity' },
+  { label: 'Web & Digital', href: '/services/web-digital' },
+  { label: 'Content & AI', href: '/services/content-ai' },
+  { label: 'Presentations', href: '/services/presentations' },
+  { label: 'Strategy', href: '/services/strategy' },
+  { label: 'Retainers', href: '/services/retainers' },
+  { label: 'Launch Kit', href: '/services/launch-kit' },
+  { label: 'Volume Creative', href: '/services/volume-creative' },
+];
+
+const links = [
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+{mobile ? (
+  <nav class="flex flex-col gap-1" aria-label="Mobile">
+    <a
+      href="/services"
+      class={`py-2 text-lg ${isActive('/services') ? 'text-accent' : 'text-ink'}`}
+      aria-current={isActive('/services') ? 'page' : undefined}
+    >
+      Services
+    </a>
+    <div class="mb-2 flex flex-col gap-1 border-l border-line pl-4">
+      {services.map((s) => (
+        <a
+          href={s.href}
+          class={`py-1 text-sm ${path === s.href ? 'text-accent' : 'text-ink-soft'}`}
+          aria-current={path === s.href ? 'page' : undefined}
+        >
+          {s.label}
+        </a>
+      ))}
+    </div>
+    {links.map((l) => (
+      <a
+        href={l.href}
+        class={`py-2 text-lg ${isActive(l.href) ? 'text-accent' : 'text-ink'}`}
+        aria-current={isActive(l.href) ? 'page' : undefined}
+      >
+        {l.label}
+      </a>
+    ))}
+  </nav>
+) : (
+  <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+    <div class="group relative">
+      <a
+        href="/services"
+        class={`flex items-center gap-1 text-sm transition-colors hover:text-accent ${
+          isActive('/services') ? 'text-accent' : 'text-ink-soft'
+        }`}
+        aria-current={isActive('/services') ? 'page' : undefined}
+      >
+        Services
+        <span class="text-xs" aria-hidden="true">▾</span>
+      </a>
+      <div
+        class="invisible absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
+      >
+        <div class="grid gap-1 rounded-card border border-line bg-surface p-3 shadow-md">
+          {services.map((s) => (
+            <a
+              href={s.href}
+              class={`rounded-sm px-3 py-2 text-sm transition-colors hover:bg-surface-2 hover:text-accent ${
+                path === s.href ? 'text-accent' : 'text-ink-soft'
+              }`}
+            >
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+    {links.map((l) => (
+      <a
+        href={l.href}
+        class={`text-sm transition-colors hover:text-accent ${
+          isActive(l.href) ? 'text-accent' : 'text-ink-soft'
+        }`}
+        aria-current={isActive(l.href) ? 'page' : undefined}
+      >
+        {l.label}
+      </a>
+    ))}
+  </nav>
+)}
