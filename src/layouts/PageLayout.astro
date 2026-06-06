@@ -8,6 +8,7 @@ export interface Props {
   heroTitle: string;
   heroSubtitle?: string;
   heroCentered?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -17,10 +18,11 @@ const {
   heroTitle,
   heroSubtitle,
   heroCentered = false,
+  noindex = false,
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} noindex={noindex}>
   <section class="section-sm border-b border-line">
     <div class={`container ${heroCentered ? 'text-center' : ''}`}>
       <div class={heroCentered ? 'mx-auto max-w-narrow' : 'max-w-narrow'}>

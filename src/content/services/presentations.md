@@ -1,9 +1,9 @@
 ---
 title: Presentations
-tagline: Investor decks, sales narratives, and keynote slides that hold a room and move money.
-category: Core Service
+tagline: Pitch decks, sales narratives, and keynote systems that hold a room and make the ask easier.
+category: Core Creative
 featured: true
-order: 4
+order: 6
 deliverables:
   - Narrative and story structure
   - Custom slide design system

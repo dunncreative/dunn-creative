@@ -1,0 +1,110 @@
+---
+// STATIC BACKUP of the original Services page (v1).
+// Self-contained snapshot — does NOT read the content collection, so it stays
+// frozen as the live services restructure evolves. Not linked anywhere; noindex.
+import PageLayout from '../layouts/PageLayout.astro';
+
+const coreServices = [
+  { title: 'Brand Identity', href: '/services/brand-identity', category: 'Core Service', tagline: 'A complete visual system that makes you look like the category leader — logo, type, color, and the rules to use them.', price: '$4,500' },
+  { title: 'Web & Digital', href: '/services/web-digital', category: 'Core Service', tagline: 'Fast, modern websites that load instantly, rank well, and turn visitors into conversations.', price: '$3,500' },
+  { title: 'Content & AI', href: '/services/content-ai', category: 'Core Service', tagline: "An AI-accelerated content engine — copy, visuals, and campaigns produced at a pace traditional studios can't match.", price: '$2,800' },
+  { title: 'Presentations', href: '/services/presentations', category: 'Core Service', tagline: 'Investor decks, sales narratives, and keynote slides that hold a room and move money.', price: '$2,500' },
+  { title: 'Strategy', href: '/services/strategy', category: 'Core Service', tagline: 'Positioning, messaging, and go-to-market thinking that gives every creative decision a reason to exist.', price: '$2,000' },
+  { title: 'Retainers', href: '/services/retainers', category: 'Core Service', tagline: 'A creative partner on call — ongoing design, content, and web work at a predictable monthly rate.', price: '$2,500/mo' },
+];
+
+const bundles = [
+  { title: 'Launch Kit', href: '/services/launch-kit', category: 'Bundle', tagline: 'Everything a new venture needs to go live — brand, site, and launch content in one fixed-scope sprint.', price: '$7,500' },
+  { title: 'Volume Creative', href: '/services/volume-creative', category: 'Bundle', tagline: 'High-volume ad, social, and campaign assets produced on a repeatable, AI-accelerated pipeline.', price: '$3,500/mo' },
+];
+
+const steps = [
+  { n: '01', title: 'Discover', body: 'We dig into your goals, audience, and the problem worth solving.' },
+  { n: '02', title: 'Define', body: 'Positioning and direction — so every creative call has a reason.' },
+  { n: '03', title: 'Design', body: 'We build the work, fast, with senior craft and AI acceleration.' },
+  { n: '04', title: 'Deliver', body: 'Files, systems, and support so your team can run with it.' },
+];
+---
+
+<PageLayout
+  title="Services (v1 backup) — Dunn Creative"
+  description="Archived version of the services page."
+  heroLabel="Services — v1 (archived)"
+  heroTitle="Everything you need to look and sound like the leader."
+  heroSubtitle="Core services that stand alone or combine into something bigger."
+  noindex
+>
+  <!-- Core services -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="fade-up text-2xl">Core services</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {coreServices.map((s) => (
+          <a href={s.href} class="card-base group p-7">
+            <span class="tag self-start">{s.category}</span>
+            <h3 class="mt-4 text-xl text-ink">{s.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{s.tagline}</p>
+            <div class="mt-6 flex items-center justify-between">
+              <span class="text-sm text-ink-dim">From <span class="text-ink">{s.price}</span></span>
+              <span class="flex items-center gap-1 text-sm text-accent">Explore
+                <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <h2 class="fade-up text-2xl">How we work</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((step) => (
+          <div class="card-base fade-up p-6">
+            <span class="text-2xl font-semibold text-accent">{step.n}</span>
+            <h3 class="mt-3 text-lg">{step.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bundles -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <h2 class="fade-up text-2xl">Bundles</h2>
+      <p class="fade-up mt-2 text-ink-soft">Coordinated packages for bigger moments — fixed scope, fixed price.</p>
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        {bundles.map((s) => (
+          <a href={s.href} class="card-base group p-7">
+            <span class="tag self-start">{s.category}</span>
+            <h3 class="mt-4 text-xl text-ink">{s.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{s.tagline}</p>
+            <div class="mt-6 flex items-center justify-between">
+              <span class="text-sm text-ink-dim">From <span class="text-ink">{s.price}</span></span>
+              <span class="flex items-center gap-1 text-sm text-accent">Explore
+                <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Retainer CTA -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <div class="card-base fade-up flex flex-col items-start justify-between gap-6 border-accent p-8 md:flex-row md:items-center">
+        <div>
+          <h2 class="text-2xl">Need ongoing support?</h2>
+          <p class="mt-2 max-w-xl text-ink-soft">A retainer gives you senior creative capacity every month — at a predictable rate, without the headcount.</p>
+        </div>
+        <a href="/services/retainers" class="btn btn-primary shrink-0">Explore retainers →</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

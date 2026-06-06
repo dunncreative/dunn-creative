@@ -1,9 +1,9 @@
 ---
 title: Brand Identity
-tagline: A complete visual system that makes you look like the category leader — logo, type, color, and the rules to use them.
-category: Core Service
+tagline: Logo, type, color, and the rules to use them — a complete system that makes you look like the category leader, not a startup with a nice logo.
+category: Core Creative
 featured: true
-order: 1
+order: 2
 deliverables:
   - Logo suite (primary, secondary, mark)
   - Color system with accessible contrast pairs

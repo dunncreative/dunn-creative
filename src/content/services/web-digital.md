@@ -1,9 +1,9 @@
 ---
-title: Web & Digital
-tagline: Fast, modern websites that load instantly, rank well, and turn visitors into conversations.
-category: Core Service
+title: Web Design
+tagline: Landing pages and full sites designed with real UX thinking, strong visual direction, and conversion built in from the start.
+category: Core Creative
 featured: true
-order: 2
+order: 3
 deliverables:
   - Responsive, accessible website build
   - Custom design system in code

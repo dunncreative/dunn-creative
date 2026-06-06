@@ -1,9 +1,9 @@
 ---
 title: Content & AI
 tagline: An AI-accelerated content engine — copy, visuals, and campaigns produced at a pace traditional studios can't match.
-category: Core Service
+category: AI Services
 featured: true
-order: 3
+order: 2
 deliverables:
   - Content strategy and editorial calendar
   - AI-assisted copywriting workflows

@@ -9,15 +9,29 @@ const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
 
-const services = [
-  { label: 'Brand Identity', href: '/services/brand-identity' },
-  { label: 'Web & Digital', href: '/services/web-digital' },
-  { label: 'Content & AI', href: '/services/content-ai' },
-  { label: 'Presentations', href: '/services/presentations' },
-  { label: 'Strategy', href: '/services/strategy' },
-  { label: 'Retainers', href: '/services/retainers' },
-  { label: 'Launch Kit', href: '/services/launch-kit' },
-  { label: 'Volume Creative', href: '/services/volume-creative' },
+const serviceGroups = [
+  {
+    label: 'Core Creative',
+    items: [
+      { label: 'Ad Creative', href: '/services/ad-creative' },
+      { label: 'Brand Identity', href: '/services/brand-identity' },
+      { label: 'Web Design', href: '/services/web-digital' },
+      { label: 'Social Media Creative', href: '/services/social-media-creative' },
+      { label: 'Email Design', href: '/services/email-design' },
+      { label: 'Presentations', href: '/services/presentations' },
+      { label: 'Motion Design', href: '/services/motion-design' },
+      { label: 'Print & Collateral', href: '/services/print-collateral' },
+      { label: 'Packaging & Merch', href: '/services/packaging-merch' },
+    ],
+  },
+  {
+    label: 'AI Services',
+    items: [
+      { label: 'AI-Enhanced Creative', href: '/services/ai-enhanced-creative' },
+      { label: 'Content & AI', href: '/services/content-ai' },
+      { label: 'AI Consulting', href: '/services/ai-consulting' },
+    ],
+  },
 ];
 
 const links = [
@@ -36,17 +50,22 @@ const links = [
     >
       Services
     </a>
-    <div class="mb-2 flex flex-col gap-1 border-l border-line pl-4">
-      {services.map((s) => (
-        <a
-          href={s.href}
-          class={`py-1 text-sm ${path === s.href ? 'text-accent' : 'text-ink-soft'}`}
-          aria-current={path === s.href ? 'page' : undefined}
-        >
-          {s.label}
-        </a>
-      ))}
-    </div>
+    {serviceGroups.map((group) => (
+      <div class="mb-2 flex flex-col gap-1 border-l border-line pl-4">
+        <span class="py-1 text-xs uppercase tracking-wide text-ink-dim">
+          {group.label}
+        </span>
+        {group.items.map((s) => (
+          <a
+            href={s.href}
+            class={`py-1 text-sm ${path === s.href ? 'text-accent' : 'text-ink-soft'}`}
+            aria-current={path === s.href ? 'page' : undefined}
+          >
+            {s.label}
+          </a>
+        ))}
+      </div>
+    ))}
     {links.map((l) => (
       <a
         href={l.href}
@@ -71,19 +90,39 @@ const links = [
         <span class="text-xs" aria-hidden="true">▾</span>
       </a>
       <div
-        class="invisible absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
+        class="invisible absolute left-1/2 top-full z-50 w-[36rem] -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
       >
-        <div class="grid gap-1 rounded-card border border-line bg-surface p-3 shadow-md">
-          {services.map((s) => (
+        <div class="rounded-card border border-line bg-surface p-5 shadow-md">
+          <div class="grid grid-cols-2 gap-6">
+            {serviceGroups.map((group) => (
+              <div>
+                <span class="block px-3 pb-2 text-xs uppercase tracking-wide text-ink-dim">
+                  {group.label}
+                </span>
+                <div class="grid gap-0.5">
+                  {group.items.map((s) => (
+                    <a
+                      href={s.href}
+                      class={`rounded-sm px-3 py-1.5 text-sm transition-colors hover:bg-surface-2 hover:text-accent ${
+                        path === s.href ? 'text-accent' : 'text-ink-soft'
+                      }`}
+                    >
+                      {s.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="mt-4 border-t border-line pt-3">
             <a
-              href={s.href}
-              class={`rounded-sm px-3 py-2 text-sm transition-colors hover:bg-surface-2 hover:text-accent ${
-                path === s.href ? 'text-accent' : 'text-ink-soft'
-              }`}
+              href="/services"
+              class="flex items-center gap-1 px-3 text-sm text-accent"
             >
-              {s.label}
+              All services & bundles
+              <span aria-hidden="true">→</span>
             </a>
-          ))}
+          </div>
         </div>
       </div>
     </div>

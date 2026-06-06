@@ -7,8 +7,12 @@ const services = (await getCollection('services')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const coreServices = services.filter((s) => s.data.category !== 'Bundle');
-const bundles = services.filter((s) => s.data.category === 'Bundle');
+const byCategory = (cat: string) =>
+  services.filter((s) => s.data.category === cat);
+
+const coreCreative = byCategory('Core Creative');
+const aiServices = byCategory('AI Services');
+const bundles = byCategory('Bundle');
 
 const steps = [
   { n: '01', title: 'Discover', body: 'We dig into your goals, audience, and the problem worth solving.' },
@@ -20,17 +24,35 @@ const steps = [
 
 <PageLayout
   title="Services — Dunn Creative"
-  description="Brand, web, content, presentations, strategy, and ongoing creative support."
+  description="Core creative and AI services — ad creative, brand, web, social, email, presentations, motion, print, packaging, and AI-accelerated production."
   heroLabel="Services"
   heroTitle="Everything you need to look and sound like the leader."
-  heroSubtitle="Core services that stand alone or combine into something bigger."
+  heroSubtitle="Senior creative across every format — accelerated by AI, held to a studio standard."
 >
-  <!-- Core services -->
+  <!-- Core Creative -->
   <section class="section-sm">
     <div class="container">
-      <h2 class="fade-up text-2xl">Core services</h2>
+      <h2 class="fade-up text-2xl">Core Creative</h2>
+      <p class="fade-up mt-2 text-ink-soft">
+        The full range of design and creative — strategy through execution.
+      </p>
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {coreServices.map((service) => (
+        {coreCreative.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Services -->
+  <section class="section-sm border-t border-line">
+    <div class="container">
+      <h2 class="fade-up text-2xl">AI Services</h2>
+      <p class="fade-up mt-2 text-ink-soft">
+        Our AI-accelerated workflow — and help bringing it into yours.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {aiServices.map((service) => (
           <ServiceCard service={service} />
         ))}
       </div>
