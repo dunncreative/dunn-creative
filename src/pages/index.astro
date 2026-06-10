@@ -1,162 +1,110 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ServiceCard from '../components/cards/ServiceCard.astro';
-import ProjectCard from '../components/cards/ProjectCard.astro';
-
-const services = (await getCollection('services')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const featuredServices = services.filter((s) => s.data.featured).slice(0, 4);
-
-const work = (await getCollection('work')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const featuredWork = work.filter((p) => p.data.featured).slice(0, 4);
-
-const marquee = services.map((s) => s.data.title);
-
-const stats = [
-  { value: '3×', label: 'Faster delivery vs. traditional studios' },
-  { value: '90+', label: 'Lighthouse performance on every build' },
-  { value: '40+', label: 'Brands launched and scaled' },
-  { value: '<1 day', label: 'Average response time' },
-];
+// Public placeholder for the dunncreative.net dev domain.
+// The real (in-progress) homepage lives at /home — reachable by direct link only.
+import '../styles/global.css';
 ---
 
-<BaseLayout>
-  <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <div
-      class="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="container relative pt-40 pb-24 text-center">
-      <span class="tag tag-accent fade-up">AI-accelerated creative studio</span>
-      <h1 class="fade-up mx-auto mt-6 max-w-3xl text-4xl gradient-text sm:text-5xl">
-        Brand, web, and content — built sharper and shipped faster.
-      </h1>
-      <p class="fade-up mx-auto mt-6 max-w-narrow text-lg text-ink-soft">
-        Dunn Creative is an independent studio pairing senior craft with an
-        AI-powered workflow. The result: studio-grade work at a pace the old
-        model can't match.
-      </p>
-      <div class="fade-up mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href="/contact" class="btn btn-primary">Start a project</a>
-        <a href="/work" class="btn btn-ghost">See the work</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Marquee ticker -->
-  <div class="overflow-hidden border-y border-line py-5">
-    <div class="marquee flex w-max gap-10 whitespace-nowrap text-sm uppercase tracking-wide text-ink-dim">
-      {[...marquee, ...marquee].map((name) => (
-        <span class="flex items-center gap-10">
-          {name}
-          <span class="text-accent" aria-hidden="true">◆</span>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dunn Creative</title>
+    <meta name="description" content="Dunn Creative development website." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <main class="dev-screen">
+      <div class="dev-glow" aria-hidden="true"></div>
+      <div class="dev-card">
+        <span class="dev-mark">
+          <span class="dev-dot" aria-hidden="true"></span>
+          Dunn Creative
         </span>
-      ))}
-    </div>
-  </div>
-
-  <!-- Featured work -->
-  <section class="section">
-    <div class="container">
-      <div class="fade-up flex items-end justify-between gap-6">
-        <div>
-          <h2 class="text-3xl">Selected work</h2>
-          <p class="mt-2 text-ink-soft">Recent projects across brand, web, and presentations.</p>
-        </div>
-        <a href="/work" class="btn btn-ghost hidden sm:inline-flex">All work →</a>
-      </div>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {featuredWork.map((project) => (
-          <ProjectCard project={project} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured services -->
-  <section class="section-sm border-t border-line">
-    <div class="container">
-      <div class="fade-up flex items-end justify-between gap-6">
-        <div>
-          <h2 class="text-3xl">What we do</h2>
-          <p class="mt-2 text-ink-soft">Core services, built to work together.</p>
-        </div>
-        <a href="/services" class="btn btn-ghost hidden sm:inline-flex">All services →</a>
-      </div>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {featuredServices.map((service) => (
-          <ServiceCard service={service} variant="compact" />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- AI differentiator -->
-  <section class="section border-t border-line">
-    <div class="container">
-      <div class="mx-auto max-w-narrow text-center">
-        <span class="tag tag-accent fade-up">The Dunn difference</span>
-        <h2 class="fade-up mt-5 text-3xl">
-          A modern workflow, not a faster sweatshop.
-        </h2>
-        <p class="fade-up mt-4 text-ink-soft">
-          We use AI to remove the busywork — drafts, variants, production — so our
-          senior team spends its time where judgment actually matters. You get
-          more, faster, without the generic feel.
+        <span class="dev-label">Development Website</span>
+        <p class="dev-text">
+          Visit our official website at
+          <a href="https://dunncreative.com">dunncreative.com</a>
         </p>
       </div>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((s) => (
-          <div class="card-base fade-up p-6 text-center">
-            <p class="text-3xl font-semibold text-accent">{s.value}</p>
-            <p class="mt-2 text-sm text-ink-soft">{s.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+    </main>
 
-  <!-- Closing CTA -->
-  <section class="relative overflow-hidden border-t border-line">
-    <div
-      class="pointer-events-none absolute left-1/2 bottom-0 h-[400px] w-[700px] -translate-x-1/2 translate-y-1/3 rounded-full bg-accent/20 blur-[140px]"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="container relative section text-center">
-      <h2 class="fade-up mx-auto max-w-2xl text-4xl gradient-text">
-        Let's build something worth shipping.
-      </h2>
-      <p class="fade-up mx-auto mt-5 max-w-narrow text-lg text-ink-soft">
-        Tell us what you're working on. We'll reply within one business day with a
-        clear next step.
-      </p>
-      <a href="/contact" class="btn btn-primary fade-up mt-8">Start a project</a>
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .marquee {
-    animation: scroll 32s linear infinite;
-  }
-  @keyframes scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee {
-      animation: none;
-    }
-  }
-</style>
+    <style>
+      .dev-screen {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100svh;
+        overflow: hidden;
+        padding: var(--space-6);
+      }
+      .dev-glow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(680px, 90vw);
+        height: min(680px, 90vw);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          rgba(0, 194, 199, 0.16) 0%,
+          rgba(0, 194, 199, 0) 70%
+        );
+        pointer-events: none;
+      }
+      .dev-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--space-4);
+      }
+      .dev-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: clamp(1.6rem, 5vw, 2.4rem);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        color: var(--color-ink);
+      }
+      .dev-dot {
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: var(--radius-full);
+        background: var(--color-accent);
+        box-shadow: 0 0 18px rgba(0, 194, 199, 0.7);
+      }
+      .dev-label {
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        color: var(--color-ink-dim);
+      }
+      .dev-text {
+        margin: 0;
+        margin-top: var(--space-2);
+        max-width: 32ch;
+        color: var(--color-ink-soft);
+        line-height: var(--leading-normal);
+      }
+      .dev-text a {
+        color: var(--color-accent-soft);
+        text-decoration: none;
+        border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+        transition: color var(--dur-fast) var(--ease-out);
+      }
+      .dev-text a:hover {
+        color: var(--color-accent);
+      }
+    </style>
+  </body>
+</html>
