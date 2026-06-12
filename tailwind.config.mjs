@@ -5,17 +5,17 @@ export default {
     extend: {
       colors: {
         accent: {
-          DEFAULT: '#00C2C7',
-          soft: '#33D1D5',
-          dim: '#0A8A8D',
+          DEFAULT: 'rgb(var(--color-accent-rgb) / <alpha-value>)',
+          soft: 'rgb(var(--color-accent-soft-rgb) / <alpha-value>)',
+          dim: 'rgb(var(--color-accent-dim-rgb) / <alpha-value>)',
         },
-        bg: '#0d0d0d',
-        surface: '#1a1a1a',
-        'surface-2': '#222222',
-        line: '#2a2a2a',
-        ink: '#f5f5f5',
-        'ink-soft': '#b4b4b4',
-        'ink-dim': '#7a7a7a',
+        bg: 'rgb(var(--color-bg-rgb) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface-rgb) / <alpha-value>)',
+        'surface-2': 'rgb(var(--color-surface-2-rgb) / <alpha-value>)',
+        line: 'rgb(var(--color-line-rgb) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink-rgb) / <alpha-value>)',
+        'ink-soft': 'rgb(var(--color-ink-soft-rgb) / <alpha-value>)',
+        'ink-dim': 'rgb(var(--color-ink-dim-rgb) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

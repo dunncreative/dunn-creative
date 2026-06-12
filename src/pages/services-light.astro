@@ -1,0 +1,120 @@
+---
+// LIGHT-THEME PREVIEW of the Services page.
+// Header + hero stay dark (outside the wrapper); the body is wrapped in
+// data-theme="light" so all shared components flip to the light palette.
+// Unlinked + noindex — a side-by-side comparison against /services.
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import ServiceCard from '../components/cards/ServiceCard.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const byCategory = (cat: string) =>
+  services.filter((s) => s.data.category === cat);
+
+const coreCreative = byCategory('Core Creative');
+const aiServices = byCategory('AI Services');
+const bundles = byCategory('Bundle');
+
+const steps = [
+  { n: '01', title: 'Discover', body: 'We dig into your goals, audience, and the problem worth solving.' },
+  { n: '02', title: 'Define', body: 'Positioning and direction — so every creative call has a reason.' },
+  { n: '03', title: 'Design', body: 'We build the work, fast, with senior craft and AI acceleration.' },
+  { n: '04', title: 'Deliver', body: 'Files, systems, and support so your team can run with it.' },
+];
+---
+
+<PageLayout
+  title="Services (light preview) — Dunn Creative"
+  description="Light-theme preview of the services page."
+  heroLabel="Services · light preview"
+  heroTitle="Everything you need to look and sound like the leader."
+  heroSubtitle="Senior creative across every format — accelerated by AI, held to a studio standard."
+  noindex
+>
+  <!-- Light-themed body. Everything inside flips to the light palette. -->
+  <div data-theme="light" class="bg-bg text-ink">
+    <!-- Core Creative -->
+    <section class="section-sm">
+      <div class="container">
+        <h2 class="fade-up text-2xl">Core Creative</h2>
+        <p class="fade-up mt-2 text-ink-soft">
+          The full range of design and creative — strategy through execution.
+        </p>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {coreCreative.map((service) => (
+            <ServiceCard service={service} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Services -->
+    <section class="section-sm border-t border-line">
+      <div class="container">
+        <h2 class="fade-up text-2xl">AI Services</h2>
+        <p class="fade-up mt-2 text-ink-soft">
+          Our AI-accelerated workflow — and help bringing it into yours.
+        </p>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {aiServices.map((service) => (
+            <ServiceCard service={service} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section-sm border-t border-line">
+      <div class="container">
+        <h2 class="fade-up text-2xl">How we work</h2>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step) => (
+            <div class="card-base fade-up p-6">
+              <span class="text-2xl font-semibold text-accent">{step.n}</span>
+              <h3 class="mt-3 text-lg">{step.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft">{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Bundles -->
+    {bundles.length > 0 && (
+      <section class="section-sm border-t border-line">
+        <div class="container">
+          <h2 class="fade-up text-2xl">Bundles</h2>
+          <p class="fade-up mt-2 text-ink-soft">
+            Coordinated packages for bigger moments — fixed scope, fixed price.
+          </p>
+          <div class="mt-8 grid gap-6 md:grid-cols-2">
+            {bundles.map((service) => (
+              <ServiceCard service={service} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Retainer CTA -->
+    <section class="section-sm border-t border-line">
+      <div class="container">
+        <div class="card-base fade-up flex flex-col items-start justify-between gap-6 border-accent p-8 md:flex-row md:items-center">
+          <div>
+            <h2 class="text-2xl">Need ongoing support?</h2>
+            <p class="mt-2 max-w-xl text-ink-soft">
+              A retainer gives you senior creative capacity every month — at a
+              predictable rate, without the headcount.
+            </p>
+          </div>
+          <a href="/services/retainers" class="btn btn-primary shrink-0">
+            Explore retainers →
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</PageLayout>
