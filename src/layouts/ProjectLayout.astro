@@ -30,7 +30,7 @@ const {
 
 <BaseLayout title={`${title} — Dunn Creative`} description={description} image={heroImage}>
   <!-- Hero -->
-  <section class="section-sm">
+  <section data-theme="dark" class="section-sm bg-bg text-ink">
     <div class="container">
       <div class="flex flex-wrap items-center gap-3 fade-up">
         {categories.map((c) => <span class="tag">{c}</span>)}
@@ -99,8 +99,8 @@ const {
   )}
 
   <!-- Footer bar -->
-  <section class="section-sm">
-    <div class="container flex flex-col items-center justify-between gap-6 border-t border-line pt-12 sm:flex-row">
+  <section data-theme="dark" class="section-sm mt-16 bg-bg text-ink">
+    <div class="container flex flex-col items-center justify-between gap-6 sm:flex-row">
       <a href="/work" class="btn btn-ghost">← Back to all work</a>
       <a href="/contact" class="btn btn-primary">Start a project like this</a>
     </div>

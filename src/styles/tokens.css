@@ -3,20 +3,20 @@
      Stored as space-separated RGB triplets so they work in both
      CSS color-mix/var() and Tailwind's `rgb(... / <alpha-value>)`
      opacity modifiers. Named vars below resolve the triplets.
-     Default = dark theme. Override the *-rgb vars under
-     [data-theme='light'] to flip any subtree to light. */
-  --color-accent-rgb: 0 194 199;
-  --color-accent-soft-rgb: 51 209 213;
-  --color-accent-dim-rgb: 10 138 141;
+     Default = LIGHT theme. Add data-theme="dark" to any element
+     (header, hero bands, CTA bands) to flip its subtree to dark. */
+  --color-accent-rgb: 8 150 154;
+  --color-accent-soft-rgb: 13 138 141;
+  --color-accent-dim-rgb: 6 110 113;
 
-  --color-bg-rgb: 13 13 13;
-  --color-surface-rgb: 26 26 26;
-  --color-surface-2-rgb: 34 34 34;
-  --color-line-rgb: 42 42 42;
+  --color-bg-rgb: 250 250 250;
+  --color-surface-rgb: 255 255 255;
+  --color-surface-2-rgb: 244 244 245;
+  --color-line-rgb: 228 228 231;
 
-  --color-ink-rgb: 245 245 245;
-  --color-ink-soft-rgb: 180 180 180;
-  --color-ink-dim-rgb: 122 122 122;
+  --color-ink-rgb: 24 24 27;
+  --color-ink-soft-rgb: 82 82 91;
+  --color-ink-dim-rgb: 113 113 122;
 
   --color-accent: rgb(var(--color-accent-rgb));
   --color-accent-soft: rgb(var(--color-accent-soft-rgb));
@@ -73,8 +73,8 @@
   --dur-slow: 520ms;
 
   /* ── Shadow ────────────────────────────────────────── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 14px 40px -18px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 14px 40px -20px rgba(0, 0, 0, 0.22);
   --shadow-glow: 0 0 60px -12px rgba(0, 194, 199, 0.35);
 
   /* ── Layout ────────────────────────────────────────── */
@@ -83,12 +83,46 @@
   --header-h: 72px;
 }
 
+/* ── Dark theme ──────────────────────────────────────────
+   Apply data-theme="dark" to any element (header, hero bands,
+   closing CTA bands) to flip its subtree to the dark palette —
+   the ~25% black on an otherwise light site. Named vars are set
+   directly (not via the triplets) because :root already resolved
+   the indirection to the light values and inherits that down. */
+[data-theme='dark'] {
+  --color-accent-rgb: 0 194 199;
+  --color-accent-soft-rgb: 51 209 213;
+  --color-accent-dim-rgb: 10 138 141;
+
+  --color-bg-rgb: 13 13 13;
+  --color-surface-rgb: 26 26 26;
+  --color-surface-2-rgb: 34 34 34;
+  --color-line-rgb: 42 42 42;
+
+  --color-ink-rgb: 245 245 245;
+  --color-ink-soft-rgb: 180 180 180;
+  --color-ink-dim-rgb: 122 122 122;
+
+  --color-accent: rgb(0 194 199);
+  --color-accent-soft: rgb(51 209 213);
+  --color-accent-dim: rgb(10 138 141);
+
+  --color-bg: rgb(13 13 13);
+  --color-surface: rgb(26 26 26);
+  --color-surface-2: rgb(34 34 34);
+  --color-line: rgb(42 42 42);
+
+  --color-ink: rgb(245 245 245);
+  --color-ink-soft: rgb(180 180 180);
+  --color-ink-dim: rgb(122 122 122);
+
+  --shadow-md: 0 14px 40px -18px rgba(0, 0, 0, 0.7);
+}
+
 /* ── Light theme ─────────────────────────────────────────
-   Apply data-theme="light" to any element to flip its subtree
-   to a light palette. Accent stays on-brand; a slightly deeper
-   accent is used where teal sits on white for contrast. */
+   Same as the default, but available explicitly to force a
+   light subtree inside a dark one. */
 [data-theme='light'] {
-  /* RGB triplets — drive Tailwind utility classes + opacity modifiers. */
   --color-accent-rgb: 8 150 154;
   --color-accent-soft-rgb: 13 138 141;
   --color-accent-dim-rgb: 6 110 113;
@@ -102,10 +136,6 @@
   --color-ink-soft-rgb: 82 82 91;
   --color-ink-dim-rgb: 113 113 122;
 
-  /* Named vars — must be set directly here (not via the triplets), because
-     :root already resolved their var() indirection to the dark values and
-     inherits that down. Component CSS (.card-base, .tag, .btn, .prose) reads
-     these, so overriding them directly is what flips the components. */
   --color-accent: rgb(8 150 154);
   --color-accent-soft: rgb(13 138 141);
   --color-accent-dim: rgb(6 110 113);
@@ -119,5 +149,5 @@
   --color-ink-soft: rgb(82 82 91);
   --color-ink-dim: rgb(113 113 122);
 
-  --shadow-md: 0 14px 40px -20px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 14px 40px -20px rgba(0, 0, 0, 0.22);
 }

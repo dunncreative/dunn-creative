@@ -34,7 +34,7 @@ const related = allWork.filter((p) => relatedProjects.includes(p.slug));
 ---
 
 <BaseLayout title={`${title} — Dunn Creative`} description={description ?? tagline}>
-  <section class="section-sm border-b border-line">
+  <section data-theme="dark" class="section-sm bg-bg text-ink">
     <div class="container">
       <span class="tag tag-accent fade-up">{category}</span>
       <h1 class="fade-up mt-5 text-4xl gradient-text">{title}</h1>
