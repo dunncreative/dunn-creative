@@ -5,6 +5,8 @@ category: Core Creative
 featured: true
 order: 1
 description: Static, animated, and video ads for paid social and multi-channel campaigns — built to test fast and perform harder.
+relatedProjects:
+  - kinetic-fitness-ads
 ---
 
 ## Ads built to perform, not just look good

@@ -5,6 +5,8 @@ category: Core Creative
 featured: false
 order: 9
 description: Packaging systems and merchandise design that strengthen brand perception at the point of contact.
+relatedProjects:
+  - harvest-market
 ---
 
 ## The brand someone can hold

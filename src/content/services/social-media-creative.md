@@ -5,6 +5,8 @@ category: Core Creative
 featured: false
 order: 4
 description: On-brand static and motion content — concepts, variations, and testing assets built for every platform's format and pace.
+relatedProjects:
+  - kinetic-fitness-ads
 ---
 
 ## Content that keeps up with the feed

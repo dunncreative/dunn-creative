@@ -22,7 +22,8 @@ tiers:
   - name: Platform
     price: "$22,000"
     turnaround: "6–10 weeks"
-relatedProjects: []
+relatedProjects:
+  - lumen-health
 ---
 
 ## Sites built for speed and conversion

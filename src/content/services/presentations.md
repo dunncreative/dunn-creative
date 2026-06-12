@@ -24,6 +24,7 @@ tiers:
     turnaround: "3–4 weeks"
 relatedProjects:
   - meridian-capital
+  - veridian-robotics-deck
 ---
 
 ## Decks that do the heavy lifting
