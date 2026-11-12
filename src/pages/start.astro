@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 
 // The service list comes from the Services collection (editable in Tina),
 // so this form always matches the site. Group order and labels below.
@@ -18,167 +18,143 @@ const groups = GROUPS.map(([cat, label]) => ({
 })).filter((g) => g.s.length);
 ---
 
-<BaseLayout
+
+<PageLayout
   title="Start a project — Dunn Creative"
   description="Tell us what you're building. A short project brief: services, goals, timing and budget. Only your name and email are required."
+  heroLabel="Start a project"
+  heroTitle="Tell us what you're building."
+  heroSubtitle="The more we know up front, the sharper our first conversation. Skip anything you're unsure about. Only your name and email are needed, and we'll fill in the rest together."
 >
 <script type="application/json" id="dcb-data" set:html={JSON.stringify(groups)} />
 <style is:global>
-#dcb{
-  --ink:#0B0E13;--ink-2:#10141B;--ink-3:#151A23;--ink-4:#1B212C;
-  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
-  --teal:#1AA6AA;--teal-b:#34D6DB;--teal-d:#0E6B6E;--teal-a:rgba(26,166,170,.12);
-  --text:#EBEFF3;--text-2:#98A4B0;--text-3:#697482;--warn:#E8A84A;
-  font-family:'Inter',-apple-system,system-ui,sans-serif;color:var(--text);background:var(--ink);
-  position:relative;overflow:hidden;-webkit-font-smoothing:antialiased;line-height:1.55
-}
-#dcb *,#dcb *::before,#dcb *::after{box-sizing:border-box}
-#dcb::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.022) 0 1px,transparent 1px 22px)}
-#dcb .glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 420px at 88% -6%,rgba(26,166,170,.20),transparent 60%),radial-gradient(620px 460px at -8% 60%,rgba(26,166,170,.08),transparent 60%)}
-#dcb .wrap{position:relative;max-width:1180px;margin:0 auto;padding:0 24px}
+#dcb{--dcb-tint:color-mix(in srgb,var(--color-accent) 7%,var(--color-surface));--dcb-warn:#b45309}
 #dcb h1,#dcb h2,#dcb h3,#dcb p{margin:0}
-#dcb a{color:var(--teal-b)}
-#dcb :focus-visible{outline:2px solid var(--teal-b);outline-offset:3px}
-
-/* hero */
-#dcb .hero{padding:88px 0 56px;border-bottom:.5px solid var(--line)}
-#dcb .mark{width:64px;height:auto;color:var(--teal);display:block;margin-bottom:34px}
-#dcb .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:18px}
-#dcb .eyebrow::before{content:"";width:26px;height:1.5px;background:var(--teal)}
-#dcb .hero h1{font-size:clamp(40px,6.2vw,76px);font-weight:700;letter-spacing:-.035em;line-height:.95;max-width:12ch;color:#fff}
-#dcb .hero h1 em{font-style:normal;color:var(--teal-b)}
-#dcb .lede{font-size:17px;font-weight:400;color:var(--text-2);max-width:56ch;margin-top:24px}
-#dcb .hero-meta{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:30px;font-size:13px;color:var(--text-3)}
-#dcb .hero-meta span{display:inline-flex;align-items:center;gap:8px}
-#dcb .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--teal)}
+#dcb .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--space-12)}
 
 /* layout */
-#dcb .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;padding:56px 0 96px;align-items:start}
-#dcb .step{padding:0 0 56px;margin:0 0 56px;border:0;border-bottom:.5px solid var(--line);min-width:0}
-#dcb .step:last-of-type{border-bottom:0;margin-bottom:0}
-#dcb .step-head{display:grid;grid-template-columns:56px 1fr;gap:4px 0;margin-bottom:28px}
-#dcb .step-n{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:1px;padding-top:9px;font-variant-numeric:tabular-nums}
-#dcb .step-head h2{font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.15}
-#dcb .step-head p{grid-column:2;color:var(--text-2);font-size:14.5px;font-weight:400;margin-top:8px;max-width:60ch}
-#dcb .step-body{display:grid;gap:22px;padding-left:56px}
+#dcb .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:var(--space-12);align-items:start}
+#dcb .step{border:0;margin:0;padding:0 0 var(--space-12);min-width:0}
+#dcb .step+.step{border-top:1px solid var(--color-line);padding-top:var(--space-12)}
+#dcb .step-head{display:grid;grid-template-columns:56px 1fr;margin-bottom:var(--space-8)}
+#dcb .step-n{font-size:var(--text-2xl);font-weight:600;line-height:1.15;color:var(--color-accent);font-variant-numeric:tabular-nums}
+#dcb .step-head h2{font-size:var(--text-2xl);color:var(--color-ink);line-height:1.15}
+#dcb .step-head p{grid-column:2;margin-top:var(--space-2);color:var(--color-ink-soft);max-width:60ch}
+#dcb .step-body{display:grid;gap:var(--space-6);padding-left:56px}
 
 /* fields */
-#dcb .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-#dcb label.f{display:grid;gap:8px;font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3)}
-#dcb label.f .req{color:var(--teal);letter-spacing:.5px;text-transform:none;font-weight:500}
-#dcb .q{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+#dcb .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+#dcb label.f{display:block;font-size:var(--text-sm);color:var(--color-ink-soft)}
+#dcb label.f .req{color:var(--color-ink-dim);font-size:var(--text-xs);margin-left:4px}
+#dcb .q{font-size:var(--text-sm);color:var(--color-ink-soft);margin-bottom:.6rem}
 #dcb input[type=text],#dcb input[type=email],#dcb input[type=tel],#dcb input[type=url],#dcb textarea,#dcb select{
-  width:100%;font-family:inherit;font-size:15px;line-height:1.5;font-weight:400;color:var(--text);background:var(--ink-2);
-  border:.5px solid var(--line-2);border-radius:10px;padding:13px 14px;letter-spacing:0;text-transform:none;transition:border-color .2s,background .2s}
-#dcb textarea{min-height:104px;resize:vertical}
-#dcb select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-3) 50%),linear-gradient(135deg,var(--text-3) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
-#dcb input::placeholder,#dcb textarea::placeholder{color:#4A5360}
-#dcb input:focus,#dcb textarea:focus,#dcb select:focus{outline:none;border-color:var(--teal);background:var(--ink-3)}
-#dcb .invalid{border-color:var(--warn)!important}
+  display:block;width:100%;margin-top:.4rem;padding:.7rem .9rem;font-family:inherit;font-size:var(--text-base);line-height:1.5;
+  color:var(--color-ink);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-sm);
+  transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+#dcb textarea{min-height:110px;resize:vertical}
+#dcb select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--color-ink-dim) 50%),linear-gradient(135deg,var(--color-ink-dim) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+#dcb input::placeholder,#dcb textarea::placeholder{color:var(--color-ink-dim);opacity:.7}
+#dcb input:focus,#dcb textarea:focus,#dcb select:focus{outline:none;border-color:var(--color-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--color-accent) 18%,transparent)}
+#dcb .invalid{border-color:var(--dcb-warn)!important}
 
-/* chips (radio/checkbox) */
+/* chips */
 #dcb .chips{display:flex;flex-wrap:wrap;gap:8px}
 #dcb .chip{position:relative}
 #dcb .chip input{position:absolute;opacity:0;pointer-events:none}
-#dcb .chip span{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-size:13.5px;color:var(--text-2);background:var(--ink-2);border:.5px solid var(--line-2);cursor:pointer;transition:all .18s;user-select:none}
-#dcb .chip span:hover{border-color:rgba(26,166,170,.5);color:var(--text)}
-#dcb .chip input:checked+span{background:var(--teal-a);border-color:var(--teal);color:var(--teal-b);font-weight:500}
-#dcb .chip input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:2px}
+#dcb .chip span{display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:var(--radius-full);font-size:var(--text-sm);color:var(--color-ink-soft);background:var(--color-surface);border:1px solid var(--color-line);cursor:pointer;user-select:none;transition:all var(--dur-fast) var(--ease-out)}
+#dcb .chip span:hover{border-color:color-mix(in srgb,var(--color-accent) 55%,var(--color-line));color:var(--color-ink)}
+#dcb .chip input:checked+span{background:color-mix(in srgb,var(--color-accent) 12%,var(--color-surface));border-color:var(--color-accent);color:var(--color-accent-dim);font-weight:500}
+#dcb .chip input:focus-visible+span{outline:2px solid var(--color-accent);outline-offset:2px}
 
-/* option tiles (larger radios) */
+/* tiles */
 #dcb .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 #dcb .tile{position:relative}
 #dcb .tile input{position:absolute;opacity:0;pointer-events:none}
-#dcb .tile span{display:grid;gap:4px;height:100%;padding:16px 18px;border-radius:12px;background:var(--ink-2);border:.5px solid var(--line-2);cursor:pointer;transition:all .18s}
-#dcb .tile b{font-size:14.5px;font-weight:600;color:var(--text)}
-#dcb .tile small{font-size:12.5px;color:var(--text-3);line-height:1.45}
-#dcb .tile span:hover{border-color:rgba(26,166,170,.5)}
-#dcb .tile input:checked+span{border-color:var(--teal);background:linear-gradient(160deg,rgba(26,166,170,.16),rgba(26,166,170,.03))}
-#dcb .tile input:checked+span b{color:var(--teal-b)}
-#dcb .tile input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:2px}
+#dcb .tile span{display:grid;gap:4px;height:100%;padding:1rem 1.1rem;border-radius:var(--radius-md);background:var(--color-surface);border:1px solid var(--color-line);cursor:pointer;transition:all var(--dur-fast) var(--ease-out)}
+#dcb .tile b{font-size:var(--text-base);font-weight:600;color:var(--color-ink)}
+#dcb .tile small{font-size:var(--text-sm);color:var(--color-ink-soft);line-height:1.45}
+#dcb .tile span:hover{border-color:color-mix(in srgb,var(--color-accent) 55%,var(--color-line))}
+#dcb .tile input:checked+span{border-color:var(--color-accent);background:var(--dcb-tint);box-shadow:0 0 0 1px var(--color-accent)}
+#dcb .tile input:checked+span b{color:var(--color-accent-dim)}
+#dcb .tile input:focus-visible+span{outline:2px solid var(--color-accent);outline-offset:2px}
 
 /* services */
-#dcb .group{display:grid;gap:12px}
-#dcb .group+.group{margin-top:12px}
-#dcb .group-t{font-size:10.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:12px}
-#dcb .group-t::after{content:"";flex:1;height:.5px;background:var(--line)}
-#dcb .svcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-#dcb .svc{position:relative;border-radius:14px;background:var(--ink-2);border:.5px solid var(--line-2);transition:border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
-#dcb .svc:hover{border-color:rgba(26,166,170,.45)}
-#dcb .svc.on{border-color:var(--teal);background:linear-gradient(160deg,rgba(26,166,170,.14),var(--ink-2) 70%);box-shadow:0 0 0 1px rgba(26,166,170,.25),0 18px 40px -24px rgba(52,214,219,.45)}
-#dcb .svc-main{display:grid;grid-template-columns:1fr auto;gap:10px;padding:18px 18px 16px;cursor:pointer}
+#dcb .group{display:grid;gap:var(--space-3)}
+#dcb .group+.group{margin-top:var(--space-4)}
+#dcb .group-t{display:flex;align-items:center;gap:12px;font-size:var(--text-sm);font-weight:600;color:var(--color-ink)}
+#dcb .group-t::after{content:"";flex:1;height:1px;background:var(--color-line)}
+#dcb .svcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+#dcb .svc{position:relative;border-radius:var(--radius-md);background:var(--color-surface);border:1px solid var(--color-line);transition:border-color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),background var(--dur-base) var(--ease-out)}
+#dcb .svc:hover{border-color:color-mix(in srgb,var(--color-accent) 55%,var(--color-line));box-shadow:var(--shadow-md)}
+#dcb .svc.on{border-color:var(--color-accent);background:var(--dcb-tint);box-shadow:0 0 0 1px var(--color-accent)}
+#dcb .svc-main{display:grid;grid-template-columns:1fr auto;gap:10px;padding:1.1rem 1.1rem 1rem;cursor:pointer}
 #dcb .svc-main input{position:absolute;opacity:0;pointer-events:none}
-#dcb .svc h3{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em}
-#dcb .svc p{font-size:12.8px;color:var(--text-2);margin-top:5px;line-height:1.5}
-#dcb .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:all .2s;flex:none}
-#dcb .tick svg{width:11px;height:11px;stroke:var(--ink);stroke-width:3;fill:none;opacity:0;transition:opacity .15s}
-#dcb .svc.on .tick{background:var(--teal-b);border-color:var(--teal-b)}
+#dcb .svc h3{font-size:var(--text-base);font-weight:600;color:var(--color-ink);letter-spacing:-.01em;line-height:1.3}
+#dcb .svc p{font-size:var(--text-sm);color:var(--color-ink-soft);margin-top:4px;line-height:1.5}
+#dcb .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--color-line);background:var(--color-surface);display:grid;place-items:center;flex:none;transition:all var(--dur-fast) var(--ease-out)}
+#dcb .tick svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;opacity:0;transition:opacity var(--dur-fast)}
+#dcb .svc.on .tick{background:var(--color-accent);border-color:var(--color-accent)}
 #dcb .svc.on .tick svg{opacity:1}
-#dcb .svc-main:has(input:focus-visible){outline:2px solid var(--teal-b);outline-offset:-2px;border-radius:14px}
-#dcb .prio{display:none;gap:6px;padding:0 18px 16px}
+#dcb .svc-main:has(input:focus-visible){outline:2px solid var(--color-accent);outline-offset:-2px;border-radius:var(--radius-md)}
+#dcb .prio{display:none;gap:6px;padding:0 1.1rem 1rem}
 #dcb .svc.on .prio{display:flex}
 #dcb .prio label{flex:1;position:relative}
 #dcb .prio input{position:absolute;opacity:0;pointer-events:none}
-#dcb .prio span{display:block;text-align:center;font-size:11px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;padding:7px 4px;border-radius:7px;border:.5px solid var(--line-2);color:var(--text-3);cursor:pointer;transition:all .15s}
-#dcb .prio input:checked+span{background:var(--teal);border-color:var(--teal);color:#05070A;font-weight:600}
-#dcb .prio input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:1px}
-#dcb .svc-other{display:none;padding:0 18px 16px}
+#dcb .prio span{display:block;text-align:center;font-size:var(--text-xs);font-weight:500;padding:.4rem .3rem;border-radius:var(--radius-full);border:1px solid var(--color-line);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;transition:all var(--dur-fast)}
+#dcb .prio input:checked+span{background:var(--color-accent);border-color:var(--color-accent);color:#06181a;font-weight:600}
+#dcb .prio input:focus-visible+span{outline:2px solid var(--color-accent);outline-offset:1px}
+#dcb .svc-other{display:none;padding:0 1.1rem 1rem}
 #dcb .svc.on .svc-other{display:block}
-#dcb .svc-other input{font-size:13.5px!important;padding:10px 12px!important}
+#dcb .svc-other input{margin-top:0;font-size:var(--text-sm)}
 
 /* summary */
-#dcb aside{position:sticky;top:24px;display:grid;gap:14px}
-#dcb .sum{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:.5px solid var(--line-2);border-radius:16px;padding:22px;display:grid;gap:18px}
+#dcb aside{position:sticky;top:calc(var(--header-h) + 24px);display:grid;gap:var(--space-3)}
+#dcb .sum{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-6);display:grid;gap:var(--space-4);box-shadow:var(--shadow-md)}
 #dcb .sum-h{display:flex;justify-content:space-between;align-items:baseline}
-#dcb .sum-h p{font-size:10.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal)}
-#dcb .sum-h b{font-size:12px;font-weight:500;color:var(--text-3);font-variant-numeric:tabular-nums}
-#dcb .meter{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
-#dcb .meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal-d),var(--teal-b));transition:width .45s cubic-bezier(.2,.7,.2,1)}
-#dcb .sum-row{display:grid;gap:7px}
-#dcb .sum-row>span{font-size:10.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3)}
-#dcb .sum-row>div{font-size:13.5px;color:var(--text)}
-#dcb .sum-row .muted{color:#4A5360}
+#dcb .sum-h p{font-size:var(--text-sm);font-weight:600;color:var(--color-ink)}
+#dcb .sum-h b{font-size:var(--text-sm);font-weight:600;color:var(--color-accent);font-variant-numeric:tabular-nums}
+#dcb .meter{height:4px;border-radius:2px;background:var(--color-surface-2);overflow:hidden}
+#dcb .meter i{display:block;height:100%;width:0;background:var(--color-accent);transition:width .45s var(--ease-out)}
+#dcb .sum-row{display:grid;gap:6px}
+#dcb .sum-row>span{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.06em;color:var(--color-ink-dim)}
+#dcb .sum-row>div{font-size:var(--text-sm);color:var(--color-ink)}
+#dcb .sum-row .muted{color:var(--color-ink-dim)}
 #dcb .stags{display:flex;flex-wrap:wrap;gap:5px}
-#dcb .stag{font-size:11.5px;padding:4px 10px;border-radius:999px;background:var(--teal-a);color:var(--teal-b);border:.5px solid rgba(26,166,170,.45)}
-#dcb .stag i{font-style:normal;color:var(--text-3);margin-left:4px;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
-#dcb .note{font-size:12.5px;color:var(--text-3);padding:0 4px;line-height:1.55}
+#dcb .stag{font-size:var(--text-xs);padding:.25rem .6rem;border-radius:var(--radius-full);background:color-mix(in srgb,var(--color-accent) 12%,var(--color-surface));color:var(--color-accent-dim);border:1px solid color-mix(in srgb,var(--color-accent) 45%,transparent)}
+#dcb .stag i{font-style:normal;color:var(--color-ink-dim);margin-left:4px}
+#dcb .sum .btn{justify-content:center}
+#dcb .note{font-size:var(--text-xs);color:var(--color-ink-dim);padding:0 4px;line-height:1.55}
 
-/* buttons */
-#dcb .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-size:13px;line-height:1;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;padding:16px 24px;border-radius:10px;border:.5px solid var(--line-2);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;text-decoration:none}
-#dcb .btn:hover{border-color:var(--teal);color:var(--teal-b)}
-#dcb .btn-go{background:var(--teal);border-color:var(--teal);color:#05070A}
-#dcb .btn-go:hover{background:var(--teal-b);border-color:var(--teal-b);color:#05070A;box-shadow:0 10px 30px -10px rgba(52,214,219,.6)}
-#dcb .btn[disabled]{opacity:.5;cursor:wait}
-#dcb .btn-sm{padding:11px 14px;font-size:11px}
+/* actions */
 #dcb .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#dcb .status{font-size:13px;color:var(--text-2);min-height:20px}
-#dcb .status.err{color:var(--warn)}
+#dcb .btn[disabled]{opacity:.55;cursor:wait;transform:none}
+#dcb .status{font-size:var(--text-sm);color:var(--color-ink-soft);min-height:20px}
+#dcb .status.err{color:var(--dcb-warn)}
+#dcb .status a{color:var(--color-accent-dim);text-decoration:underline}
 #dcb .hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 
 /* done */
-#dcb .done{display:none;padding:80px 0 120px;text-align:center}
+#dcb .done{display:none;padding:var(--space-16) 0 var(--space-24);text-align:center}
 #dcb .done.show{display:block}
-#dcb .done .mark{margin:0 auto 30px;width:80px}
-#dcb .done h2{font-size:clamp(32px,4.4vw,52px);font-weight:700;letter-spacing:-.03em;color:#fff}
-#dcb .done p{color:var(--text-2);max-width:52ch;margin:16px auto 0;font-weight:400;font-size:16px}
-#dcb .done .actions{justify-content:center;margin-top:30px}
+#dcb .done .mark{width:72px;height:auto;color:var(--color-accent);display:block;margin:0 auto var(--space-8)}
+#dcb .done h2{font-size:var(--text-3xl);color:var(--color-ink)}
+#dcb .done p{color:var(--color-ink-soft);max-width:52ch;margin:var(--space-4) auto 0}
+#dcb .done .actions{justify-content:center;margin-top:var(--space-8)}
 
 /* mobile bar */
 #dcb .mbar{display:none}
 @media (max-width:980px){
   #dcb .layout{grid-template-columns:1fr;gap:0}
-  #dcb aside{position:static;margin-top:8px}
-  #dcb .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 18px;border-radius:14px;background:rgba(16,20,27,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:.5px solid var(--line-2);box-shadow:0 20px 40px -12px rgba(0,0,0,.7);transform:translateY(140%);transition:transform .3s}
+  #dcb aside{position:static;margin-top:var(--space-8)}
+  #dcb .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 18px;border-radius:var(--radius-full);background:color-mix(in srgb,var(--color-surface) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--color-line);box-shadow:var(--shadow-md);transform:translateY(160%);transition:transform .3s var(--ease-out)}
   #dcb .mbar.show{transform:none}
-  #dcb .mbar span{font-size:13px;color:var(--text-2)}
-  #dcb .mbar b{color:var(--teal-b);font-weight:600}
+  #dcb .mbar span{font-size:var(--text-sm);color:var(--color-ink-soft)}
+  #dcb .mbar b{color:var(--color-accent-dim);font-weight:600}
 }
 @media (max-width:640px){
-  #dcb .wrap{padding:0 16px}
-  #dcb .hero{padding:56px 0 40px}
   #dcb .step-head{grid-template-columns:1fr}
   #dcb .step-head p{grid-column:1}
-  #dcb .step-n{padding:0 0 6px}
+  #dcb .step-n{margin-bottom:6px}
   #dcb .step-body{padding-left:0}
   #dcb .row{grid-template-columns:1fr}
   #dcb .svcs,#dcb .tiles{grid-template-columns:1fr}
@@ -186,28 +162,20 @@ const groups = GROUPS.map(([cat, label]) => ({
 @media (prefers-reduced-motion:reduce){#dcb *{transition:none!important}}
 </style>
 
+<section class="section-sm">
+<div class="container" id="dcb">
+  <div id="dcb-form-wrap">
+    <div class="meta"><span class="tag">About 5–10 minutes</span><span class="tag">Saves as you go</span><span class="tag tag-accent">Read by Chris, personally</span></div>
 
-<section id="dcb" aria-labelledby="dcb-title">
-  <div class="glow"></div>
-
-  <div class="wrap" id="dcb-form-wrap">
-    <header class="hero">
-      <svg class="mark" viewBox="0 0 750 255" aria-label="Dunn Creative" role="img"><path d="M279 26H26v203h253L463 26h261v203H470" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <p class="eyebrow">Start a project</p>
-      <h1 id="dcb-title">Tell us what you're <em>building.</em></h1>
-      <p class="lede">The more we know up front, the sharper our first conversation. Skip anything you're unsure about. Only your name and email are needed, and we'll fill in the rest together.</p>
-      <div class="hero-meta"><span>About 5–10 minutes</span><span>Saves as you go</span><span>Read by Chris, personally</span></div>
-    </header>
-
-    <form class="layout" id="dcb-form" novalidate>
+    <form class="layout" id="dcb-form" novalidate aria-label="Project brief">
       <div class="steps">
 
         <fieldset class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Who are we talking to?</h2><p>The basics, so we know who to get back to.</p></div>
           <div class="step-body">
             <div class="row">
-              <label class="f" for="dcb-name">Your name <span class="req">required</span><input type="text" id="dcb-name" name="name" autocomplete="name" placeholder="First and last"></label>
-              <label class="f" for="dcb-email">Email <span class="req">required</span><input type="email" id="dcb-email" name="email" autocomplete="email" placeholder="you@company.com"></label>
+              <label class="f" for="dcb-name">Your name <span class="req">(required)</span><input type="text" id="dcb-name" name="name" autocomplete="name" placeholder="First and last"></label>
+              <label class="f" for="dcb-email">Email <span class="req">(required)</span><input type="email" id="dcb-email" name="email" autocomplete="email" placeholder="you@company.com"></label>
             </div>
             <div class="row">
               <label class="f" for="dcb-company">Company or brand<input type="text" id="dcb-company" name="company" autocomplete="organization" placeholder="Name, or what it'll be called"></label>
@@ -226,14 +194,14 @@ const groups = GROUPS.map(([cat, label]) => ({
         </fieldset>
 
         <fieldset class="step">
-          <div class="step-head"><span class="step-n">02</span><h2>What do you need help with?</h2><p>Tick anything you'd like to talk about, then tell us when it matters: now, soon, or just exploring. Each piece is scoped on its own once we know what you need.</p></div>
+          <div class="step-head"><span class="step-n">02</span><h2>What do you need help with?</h2><p>Pick anything you'd like to talk about, then tell us when it matters: now, soon, or just exploring. Each piece is scoped on its own once we know what you need.</p></div>
           <div class="step-body" id="dcb-services"></div>
         </fieldset>
 
         <fieldset class="step">
           <div class="step-head"><span class="step-n">03</span><h2>What are you trying to make happen?</h2><p>The outcome matters more than the deliverable. This is where the strategy starts.</p></div>
           <div class="step-body">
-            <div><p class="q">Goals · pick all that apply</p><div class="chips" data-check="goals"></div></div>
+            <div><p class="q">Goals (pick all that apply)</p><div class="chips" data-check="goals"></div></div>
             <label class="f" for="dcb-challenge">What's the main challenge or opportunity?<textarea id="dcb-challenge" name="challenge" placeholder="What's not working, what's changing, or what you're launching."></textarea></label>
             <label class="f" for="dcb-success">A year from now, what does success look like?<textarea id="dcb-success" name="success" placeholder="More inquiries, a brand you're proud to hand out, a launch that lands…"></textarea></label>
             <label class="f" for="dcb-audience">Who are you trying to reach?<textarea id="dcb-audience" name="audience" placeholder="Your ideal customer, client or audience, in a sentence or two."></textarea></label>
@@ -275,9 +243,9 @@ const groups = GROUPS.map(([cat, label]) => ({
             <label class="f" for="dcb-notes">Anything else<textarea id="dcb-notes" name="notes" placeholder="Questions for us, context, or anything that didn't fit above."></textarea></label>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="actions">
-              <button class="btn btn-go" type="submit" id="dcb-send">Send brief →</button>
-              <button class="btn btn-sm" type="button" id="dcb-copy">Copy my answers</button>
-              <button class="btn btn-sm" type="button" id="dcb-reset">Start over</button>
+              <button class="btn btn-primary" type="submit" id="dcb-send">Send brief →</button>
+              <button class="btn btn-ghost" type="button" id="dcb-copy">Copy my answers</button>
+              <button class="btn btn-ghost" type="button" id="dcb-reset">Start over</button>
             </div>
             <p class="status" id="dcb-status" role="status" aria-live="polite"></p>
           </div>
@@ -293,25 +261,24 @@ const groups = GROUPS.map(([cat, label]) => ({
           <div class="sum-row"><span>Engagement</span><div id="s-eng" class="muted">—</div></div>
           <div class="sum-row"><span>Investment</span><div id="s-bud" class="muted">—</div></div>
           <div class="sum-row"><span>Timing</span><div id="s-time" class="muted">—</div></div>
-          <button class="btn btn-go" type="submit" form="dcb-form">Send brief →</button>
+          <button class="btn btn-primary" type="submit" form="dcb-form">Send brief →</button>
         </div>
         <p class="note">Saved on this device as you go. Close the page and pick up where you left off.</p>
       </aside>
     </form>
   </div>
 
-  <div class="wrap done" id="dcb-done" role="status">
+  <div class="done" id="dcb-done" role="status">
     <svg class="mark" viewBox="0 0 750 255" aria-hidden="true"><path d="M279 26H26v203h253L463 26h261v203H470" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <p class="eyebrow" style="justify-content:center">Brief received</p>
-    <h2>Thanks, <span id="dcb-done-name">friend</span>.</h2>
+    <span class="tag tag-accent">Brief received</span>
+    <h2 style="margin-top:var(--space-4)">Thanks, <span id="dcb-done-name">friend</span>.</h2>
     <p>Chris reads every brief personally and will be in touch soon with next steps and a time to talk.</p>
-    <div class="actions"><a class="btn" href="/">Back to Dunn Creative</a></div>
+    <div class="actions"><a class="btn btn-ghost" href="/work">See our work</a><a class="btn btn-primary" href="/services">Explore services</a></div>
   </div>
 
-  <div class="mbar" id="dcb-mbar"><span><b id="m-count">0</b> services · <span id="m-pct">0%</span> complete</span><button class="btn btn-go btn-sm" type="button" id="m-review">Review</button></div>
+  <div class="mbar" id="dcb-mbar"><span><b id="m-count">0</b> services · <span id="m-pct">0%</span> complete</span><button class="btn btn-primary" type="button" id="m-review">Review</button></div>
+</div>
 </section>
-
-
 <script is:inline>
 (function(){
 "use strict";
@@ -477,4 +444,4 @@ if("IntersectionObserver" in window){
 load();paint();
 })();
 </script>
-</BaseLayout>
+</PageLayout>
