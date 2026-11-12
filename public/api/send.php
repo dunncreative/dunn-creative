@@ -12,7 +12,7 @@ header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 
 const TO_EMAIL   = 'chris@dunncreative.com';
-const FROM_EMAIL = 'forms@dunncreative.net';   // must be an address on this hosting domain
+const FROM_EMAIL = 'hello@dunncreative.net';   // real mailbox on this hosting domain (Hostinger)
 const ALLOWED_ORIGINS = [
   'https://dunncreative.net', 'https://www.dunncreative.net',
   'https://dunncreative.com', 'https://www.dunncreative.com',
