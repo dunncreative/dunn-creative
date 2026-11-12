@@ -155,9 +155,9 @@ const process = [
 
 <script>
   // ── Contact form handler ───────────────────────────────────────────────
-  // Sends through FormSubmit to Chris's inbox (same service as /start).
-  // The first submission triggers a one-time activation email to that address.
-  const ENDPOINT = 'https://formsubmit.co/ajax/chris@dunncreative.com';
+  // Sends to /api/send.php on our own server (public/api/send.php), which
+  // emails Chris. Runs on Hostinger only: the local dev server can't run PHP.
+  const ENDPOINT = '/api/send.php';
 
   const setup = () => {
     const form = document.getElementById('contact-form') as HTMLFormElement | null;
@@ -190,8 +190,7 @@ const process = [
             ...data,
             _subject: `New contact message: ${data.company || data.name || 'website'}`,
             _replyto: data.email,
-            _template: 'box',
-            _captcha: 'false',
+            _form: 'contact',
           }),
         });
         const json = await res.json().catch(() => ({}));

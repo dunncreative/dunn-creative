@@ -282,7 +282,7 @@ const groups = GROUPS.map(([cat, label]) => ({
 <script is:inline>
 (function(){
 "use strict";
-var ENDPOINT="https://formsubmit.co/ajax/chris@dunncreative.com",KEY="dc-brief-v1";
+var ENDPOINT="/api/send.php" /* our own server: public/api/send.php */,KEY="dc-brief-v1";
 var root=document.getElementById("dcb");if(!root)return;
 
 var SERVICES=JSON.parse(document.getElementById("dcb-data").textContent);
@@ -406,7 +406,7 @@ form.addEventListener("submit",async function(e){
   var sv=picked();
   try{
     var r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({
-      _subject:"New project brief: "+(val("company")||val("name")),_replyto:val("email"),_template:"box",_captcha:"false",
+      _form:"brief",_subject:"New project brief: "+(val("company")||val("name")),_replyto:val("email"),
       name:val("name"),email:val("email"),company:val("company"),services:sv.map(function(s){return s.name;}).join(", "),
       budget:label("budget",val("budget")),timeline:label("timeline",val("timeline")),brief:compile()})});
     var j={};try{j=await r.json();}catch(_){}
