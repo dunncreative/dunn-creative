@@ -1,7 +1,12 @@
 ---
-title: Presentations
-tagline: Pitch decks, sales narratives, and keynote systems that hold a room and make the ask easier.
+title: Presentations & Decks
+tagline: >-
+  Pitch decks, sales narratives, and keynote systems that hold a room and make
+  the ask easier.
 category: Core Creative
+description: >-
+  Investor decks, sales narratives, and keynote slides that hold a room and move
+  money.
 featured: true
 order: 6
 deliverables:
@@ -11,17 +16,16 @@ deliverables:
   - Editable master template
   - Speaker notes and handout version
   - Presenter coaching session
-description: Investor decks, sales narratives, and keynote slides that hold a room and move money.
 tiers:
   - name: Refresh
-    price: "$2,500"
-    turnaround: "1 week"
+    price: '$2,500'
+    turnaround: 1 week
   - name: Signature
-    price: "$6,000"
-    turnaround: "2–3 weeks"
+    price: '$6,000'
+    turnaround: 2–3 weeks
   - name: Narrative
-    price: "$11,000"
-    turnaround: "3–4 weeks"
+    price: '$11,000'
+    turnaround: 3–4 weeks
 relatedProjects:
   - meridian-capital
   - veridian-robotics-deck
