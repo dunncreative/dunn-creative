@@ -87,8 +87,8 @@ const process = [
         </div>
         <div class="card-base p-6">
           <h2 class="text-sm uppercase tracking-wide text-ink-dim">Prefer email?</h2>
-          <a href="mailto:hello@dunncreative.net" class="mt-2 inline-block text-accent">
-            hello@dunncreative.net
+          <a href="mailto:chris@dunncreative.com" class="mt-2 inline-block text-accent">
+            chris@dunncreative.com
           </a>
         </div>
         <div>
@@ -155,12 +155,9 @@ const process = [
 
 <script>
   // ── Contact form handler ───────────────────────────────────────────────
-  // To go live, sign up at https://formspree.io, create a form, and either:
-  //   1. Set PUBLIC_FORMSPREE_ID in your environment, or
-  //   2. Hardcode the endpoint below.
-  // Until an ID is present, the form runs in local-dev mode and simulates a
-  // successful submission so you can test the UI without a backend.
-  const FORMSPREE_ID = ''; // e.g. 'xyzabcd'  → https://formspree.io/f/xyzabcd
+  // Sends through FormSubmit to Chris's inbox (same service as /start).
+  // The first submission triggers a one-time activation email to that address.
+  const ENDPOINT = 'https://formsubmit.co/ajax/chris@dunncreative.com';
 
   const setup = () => {
     const form = document.getElementById('contact-form') as HTMLFormElement | null;
@@ -185,21 +182,26 @@ const process = [
       button.textContent = 'Sending…';
 
       try {
-        if (FORMSPREE_ID) {
-          const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-            method: 'POST',
-            headers: { Accept: 'application/json' },
-            body: new FormData(form),
-          });
-          if (!res.ok) throw new Error('Request failed');
-        } else {
-          // Local-dev simulation
-          await new Promise((r) => setTimeout(r, 700));
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            ...data,
+            _subject: `New contact message: ${data.company || data.name || 'website'}`,
+            _replyto: data.email,
+            _template: 'box',
+            _captcha: 'false',
+          }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || String((json as { success?: unknown }).success) === 'false') {
+          throw new Error('Request failed');
         }
         form.reset();
         show("Thanks — your message is in. We'll reply within one business day.", 'success');
       } catch {
-        show('Something went wrong. Please email hello@dunncreative.net instead.', 'error');
+        show('Something went wrong. Please email chris@dunncreative.com instead.', 'error');
       } finally {
         button.disabled = false;
         button.textContent = original;
