@@ -7,14 +7,32 @@ Tailwind, deployed to Hostinger via GitHub Actions.
 
 ```bash
 npm install      # requires Node 20+
-npm run dev      # http://localhost:4321
+npm run dev      # site + Tina editor: http://localhost:4321 and http://localhost:4321/admin/index.html
 ```
 
-| Command           | Action                                       |
-| ----------------- | -------------------------------------------- |
-| `npm run dev`     | Start the dev server at `localhost:4321`     |
-| `npm run build`   | Build the static site to `./dist/`           |
-| `npm run preview` | Preview the production build locally         |
+| Command             | Action                                                       |
+| ------------------- | ------------------------------------------------------------ |
+| `npm run dev`       | Site and Tina CMS editor, live-reloading at `localhost:4321` |
+| `npm run dev:site`  | Site only, no CMS                                            |
+| `npm run build`     | Build the static site to `./dist/` (no CMS admin)            |
+| `npm run build:cms` | Tina admin + site (needs `TINA_CLIENT_ID` / `TINA_TOKEN`)    |
+| `npm run preview`   | Preview the production build locally                         |
+
+## Editing content (Tina CMS)
+
+Run `npm run dev`, open `http://localhost:4321/admin/index.html`, and edit
+**Services** or **Work**. Tina writes straight to the Markdown files in
+`src/content/`, so every save shows on the local site and appears in `git status`
+like any other change. Commit and push to publish. Images uploaded in the editor
+go to `public/images/`.
+
+Local editing needs no account. Editing on the live site later needs Tina Cloud
+(copy `.env.example` to `.env` and fill it in). The form fields in
+`tina/config.ts` mirror the schema in `src/content/config.ts`: keep the two in
+step when you add a field.
+
+Page copy on Home, About and Contact is still written in the `.astro` page files,
+not in the CMS.
 
 ## Structure
 

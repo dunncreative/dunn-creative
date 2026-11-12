@@ -4,19 +4,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "dev:site": "astro dev",
     "build": "astro build",
+    "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.2",
     "astro": "^4.16.18",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "tinacms": "^2.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "@tinacms/cli": "^1.9.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

@@ -31,3 +31,7 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
+
+# tina cms (rebuilt by `npm run dev`)
+public/admin/
+tina/__generated__/
