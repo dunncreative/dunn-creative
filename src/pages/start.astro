@@ -1,0 +1,480 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The service list comes from the Services collection (editable in Tina),
+// so this form always matches the site. Group order and labels below.
+const GROUPS: [string, string][] = [
+  ['Core Creative', 'Core creative'],
+  ['AI Services', 'AI services'],
+  ['Core Service', 'Strategy & ongoing'],
+  ['Bundle', 'Bundles'],
+];
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const short = (t: string) => t.split(/ — |\. /)[0].replace(/\.$/, '') + '.';
+const groups = GROUPS.map(([cat, label]) => ({
+  g: label,
+  s: services.filter((s) => s.data.category === cat).map((s) => [s.slug, s.data.title, short(s.data.tagline)]),
+})).filter((g) => g.s.length);
+---
+
+<BaseLayout
+  title="Start a project — Dunn Creative"
+  description="Tell us what you're building. A short project brief: services, goals, timing and budget. Only your name and email are required."
+>
+<script type="application/json" id="dcb-data" set:html={JSON.stringify(groups)} />
+<style is:global>
+#dcb{
+  --ink:#0B0E13;--ink-2:#10141B;--ink-3:#151A23;--ink-4:#1B212C;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --teal:#1AA6AA;--teal-b:#34D6DB;--teal-d:#0E6B6E;--teal-a:rgba(26,166,170,.12);
+  --text:#EBEFF3;--text-2:#98A4B0;--text-3:#697482;--warn:#E8A84A;
+  font-family:'Inter',-apple-system,system-ui,sans-serif;color:var(--text);background:var(--ink);
+  position:relative;overflow:hidden;-webkit-font-smoothing:antialiased;line-height:1.55
+}
+#dcb *,#dcb *::before,#dcb *::after{box-sizing:border-box}
+#dcb::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.022) 0 1px,transparent 1px 22px)}
+#dcb .glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 420px at 88% -6%,rgba(26,166,170,.20),transparent 60%),radial-gradient(620px 460px at -8% 60%,rgba(26,166,170,.08),transparent 60%)}
+#dcb .wrap{position:relative;max-width:1180px;margin:0 auto;padding:0 24px}
+#dcb h1,#dcb h2,#dcb h3,#dcb p{margin:0}
+#dcb a{color:var(--teal-b)}
+#dcb :focus-visible{outline:2px solid var(--teal-b);outline-offset:3px}
+
+/* hero */
+#dcb .hero{padding:88px 0 56px;border-bottom:.5px solid var(--line)}
+#dcb .mark{width:64px;height:auto;color:var(--teal);display:block;margin-bottom:34px}
+#dcb .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+#dcb .eyebrow::before{content:"";width:26px;height:1.5px;background:var(--teal)}
+#dcb .hero h1{font-size:clamp(40px,6.2vw,76px);font-weight:700;letter-spacing:-.035em;line-height:.95;max-width:12ch;color:#fff}
+#dcb .hero h1 em{font-style:normal;color:var(--teal-b)}
+#dcb .lede{font-size:17px;font-weight:400;color:var(--text-2);max-width:56ch;margin-top:24px}
+#dcb .hero-meta{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:30px;font-size:13px;color:var(--text-3)}
+#dcb .hero-meta span{display:inline-flex;align-items:center;gap:8px}
+#dcb .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--teal)}
+
+/* layout */
+#dcb .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;padding:56px 0 96px;align-items:start}
+#dcb .step{padding:0 0 56px;margin:0 0 56px;border:0;border-bottom:.5px solid var(--line);min-width:0}
+#dcb .step:last-of-type{border-bottom:0;margin-bottom:0}
+#dcb .step-head{display:grid;grid-template-columns:56px 1fr;gap:4px 0;margin-bottom:28px}
+#dcb .step-n{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:1px;padding-top:9px;font-variant-numeric:tabular-nums}
+#dcb .step-head h2{font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.15}
+#dcb .step-head p{grid-column:2;color:var(--text-2);font-size:14.5px;font-weight:400;margin-top:8px;max-width:60ch}
+#dcb .step-body{display:grid;gap:22px;padding-left:56px}
+
+/* fields */
+#dcb .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#dcb label.f{display:grid;gap:8px;font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3)}
+#dcb label.f .req{color:var(--teal);letter-spacing:.5px;text-transform:none;font-weight:500}
+#dcb .q{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+#dcb input[type=text],#dcb input[type=email],#dcb input[type=tel],#dcb input[type=url],#dcb textarea,#dcb select{
+  width:100%;font-family:inherit;font-size:15px;line-height:1.5;font-weight:400;color:var(--text);background:var(--ink-2);
+  border:.5px solid var(--line-2);border-radius:10px;padding:13px 14px;letter-spacing:0;text-transform:none;transition:border-color .2s,background .2s}
+#dcb textarea{min-height:104px;resize:vertical}
+#dcb select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-3) 50%),linear-gradient(135deg,var(--text-3) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+#dcb input::placeholder,#dcb textarea::placeholder{color:#4A5360}
+#dcb input:focus,#dcb textarea:focus,#dcb select:focus{outline:none;border-color:var(--teal);background:var(--ink-3)}
+#dcb .invalid{border-color:var(--warn)!important}
+
+/* chips (radio/checkbox) */
+#dcb .chips{display:flex;flex-wrap:wrap;gap:8px}
+#dcb .chip{position:relative}
+#dcb .chip input{position:absolute;opacity:0;pointer-events:none}
+#dcb .chip span{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-size:13.5px;color:var(--text-2);background:var(--ink-2);border:.5px solid var(--line-2);cursor:pointer;transition:all .18s;user-select:none}
+#dcb .chip span:hover{border-color:rgba(26,166,170,.5);color:var(--text)}
+#dcb .chip input:checked+span{background:var(--teal-a);border-color:var(--teal);color:var(--teal-b);font-weight:500}
+#dcb .chip input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:2px}
+
+/* option tiles (larger radios) */
+#dcb .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+#dcb .tile{position:relative}
+#dcb .tile input{position:absolute;opacity:0;pointer-events:none}
+#dcb .tile span{display:grid;gap:4px;height:100%;padding:16px 18px;border-radius:12px;background:var(--ink-2);border:.5px solid var(--line-2);cursor:pointer;transition:all .18s}
+#dcb .tile b{font-size:14.5px;font-weight:600;color:var(--text)}
+#dcb .tile small{font-size:12.5px;color:var(--text-3);line-height:1.45}
+#dcb .tile span:hover{border-color:rgba(26,166,170,.5)}
+#dcb .tile input:checked+span{border-color:var(--teal);background:linear-gradient(160deg,rgba(26,166,170,.16),rgba(26,166,170,.03))}
+#dcb .tile input:checked+span b{color:var(--teal-b)}
+#dcb .tile input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:2px}
+
+/* services */
+#dcb .group{display:grid;gap:12px}
+#dcb .group+.group{margin-top:12px}
+#dcb .group-t{font-size:10.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:12px}
+#dcb .group-t::after{content:"";flex:1;height:.5px;background:var(--line)}
+#dcb .svcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+#dcb .svc{position:relative;border-radius:14px;background:var(--ink-2);border:.5px solid var(--line-2);transition:border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
+#dcb .svc:hover{border-color:rgba(26,166,170,.45)}
+#dcb .svc.on{border-color:var(--teal);background:linear-gradient(160deg,rgba(26,166,170,.14),var(--ink-2) 70%);box-shadow:0 0 0 1px rgba(26,166,170,.25),0 18px 40px -24px rgba(52,214,219,.45)}
+#dcb .svc-main{display:grid;grid-template-columns:1fr auto;gap:10px;padding:18px 18px 16px;cursor:pointer}
+#dcb .svc-main input{position:absolute;opacity:0;pointer-events:none}
+#dcb .svc h3{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em}
+#dcb .svc p{font-size:12.8px;color:var(--text-2);margin-top:5px;line-height:1.5}
+#dcb .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:all .2s;flex:none}
+#dcb .tick svg{width:11px;height:11px;stroke:var(--ink);stroke-width:3;fill:none;opacity:0;transition:opacity .15s}
+#dcb .svc.on .tick{background:var(--teal-b);border-color:var(--teal-b)}
+#dcb .svc.on .tick svg{opacity:1}
+#dcb .svc-main:has(input:focus-visible){outline:2px solid var(--teal-b);outline-offset:-2px;border-radius:14px}
+#dcb .prio{display:none;gap:6px;padding:0 18px 16px}
+#dcb .svc.on .prio{display:flex}
+#dcb .prio label{flex:1;position:relative}
+#dcb .prio input{position:absolute;opacity:0;pointer-events:none}
+#dcb .prio span{display:block;text-align:center;font-size:11px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;padding:7px 4px;border-radius:7px;border:.5px solid var(--line-2);color:var(--text-3);cursor:pointer;transition:all .15s}
+#dcb .prio input:checked+span{background:var(--teal);border-color:var(--teal);color:#05070A;font-weight:600}
+#dcb .prio input:focus-visible+span{outline:2px solid var(--teal-b);outline-offset:1px}
+#dcb .svc-other{display:none;padding:0 18px 16px}
+#dcb .svc.on .svc-other{display:block}
+#dcb .svc-other input{font-size:13.5px!important;padding:10px 12px!important}
+
+/* summary */
+#dcb aside{position:sticky;top:24px;display:grid;gap:14px}
+#dcb .sum{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:.5px solid var(--line-2);border-radius:16px;padding:22px;display:grid;gap:18px}
+#dcb .sum-h{display:flex;justify-content:space-between;align-items:baseline}
+#dcb .sum-h p{font-size:10.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal)}
+#dcb .sum-h b{font-size:12px;font-weight:500;color:var(--text-3);font-variant-numeric:tabular-nums}
+#dcb .meter{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+#dcb .meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal-d),var(--teal-b));transition:width .45s cubic-bezier(.2,.7,.2,1)}
+#dcb .sum-row{display:grid;gap:7px}
+#dcb .sum-row>span{font-size:10.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3)}
+#dcb .sum-row>div{font-size:13.5px;color:var(--text)}
+#dcb .sum-row .muted{color:#4A5360}
+#dcb .stags{display:flex;flex-wrap:wrap;gap:5px}
+#dcb .stag{font-size:11.5px;padding:4px 10px;border-radius:999px;background:var(--teal-a);color:var(--teal-b);border:.5px solid rgba(26,166,170,.45)}
+#dcb .stag i{font-style:normal;color:var(--text-3);margin-left:4px;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+#dcb .note{font-size:12.5px;color:var(--text-3);padding:0 4px;line-height:1.55}
+
+/* buttons */
+#dcb .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-size:13px;line-height:1;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;padding:16px 24px;border-radius:10px;border:.5px solid var(--line-2);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;text-decoration:none}
+#dcb .btn:hover{border-color:var(--teal);color:var(--teal-b)}
+#dcb .btn-go{background:var(--teal);border-color:var(--teal);color:#05070A}
+#dcb .btn-go:hover{background:var(--teal-b);border-color:var(--teal-b);color:#05070A;box-shadow:0 10px 30px -10px rgba(52,214,219,.6)}
+#dcb .btn[disabled]{opacity:.5;cursor:wait}
+#dcb .btn-sm{padding:11px 14px;font-size:11px}
+#dcb .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#dcb .status{font-size:13px;color:var(--text-2);min-height:20px}
+#dcb .status.err{color:var(--warn)}
+#dcb .hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+
+/* done */
+#dcb .done{display:none;padding:80px 0 120px;text-align:center}
+#dcb .done.show{display:block}
+#dcb .done .mark{margin:0 auto 30px;width:80px}
+#dcb .done h2{font-size:clamp(32px,4.4vw,52px);font-weight:700;letter-spacing:-.03em;color:#fff}
+#dcb .done p{color:var(--text-2);max-width:52ch;margin:16px auto 0;font-weight:400;font-size:16px}
+#dcb .done .actions{justify-content:center;margin-top:30px}
+
+/* mobile bar */
+#dcb .mbar{display:none}
+@media (max-width:980px){
+  #dcb .layout{grid-template-columns:1fr;gap:0}
+  #dcb aside{position:static;margin-top:8px}
+  #dcb .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 18px;border-radius:14px;background:rgba(16,20,27,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:.5px solid var(--line-2);box-shadow:0 20px 40px -12px rgba(0,0,0,.7);transform:translateY(140%);transition:transform .3s}
+  #dcb .mbar.show{transform:none}
+  #dcb .mbar span{font-size:13px;color:var(--text-2)}
+  #dcb .mbar b{color:var(--teal-b);font-weight:600}
+}
+@media (max-width:640px){
+  #dcb .wrap{padding:0 16px}
+  #dcb .hero{padding:56px 0 40px}
+  #dcb .step-head{grid-template-columns:1fr}
+  #dcb .step-head p{grid-column:1}
+  #dcb .step-n{padding:0 0 6px}
+  #dcb .step-body{padding-left:0}
+  #dcb .row{grid-template-columns:1fr}
+  #dcb .svcs,#dcb .tiles{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){#dcb *{transition:none!important}}
+</style>
+
+
+<section id="dcb" aria-labelledby="dcb-title">
+  <div class="glow"></div>
+
+  <div class="wrap" id="dcb-form-wrap">
+    <header class="hero">
+      <svg class="mark" viewBox="0 0 750 255" aria-label="Dunn Creative" role="img"><path d="M279 26H26v203h253L463 26h261v203H470" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p class="eyebrow">Start a project</p>
+      <h1 id="dcb-title">Tell us what you're <em>building.</em></h1>
+      <p class="lede">The more we know up front, the sharper our first conversation. Skip anything you're unsure about. Only your name and email are needed, and we'll fill in the rest together.</p>
+      <div class="hero-meta"><span>About 5–10 minutes</span><span>Saves as you go</span><span>Read by Chris, personally</span></div>
+    </header>
+
+    <form class="layout" id="dcb-form" novalidate>
+      <div class="steps">
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">01</span><h2>Who are we talking to?</h2><p>The basics, so we know who to get back to.</p></div>
+          <div class="step-body">
+            <div class="row">
+              <label class="f" for="dcb-name">Your name <span class="req">required</span><input type="text" id="dcb-name" name="name" autocomplete="name" placeholder="First and last"></label>
+              <label class="f" for="dcb-email">Email <span class="req">required</span><input type="email" id="dcb-email" name="email" autocomplete="email" placeholder="you@company.com"></label>
+            </div>
+            <div class="row">
+              <label class="f" for="dcb-company">Company or brand<input type="text" id="dcb-company" name="company" autocomplete="organization" placeholder="Name, or what it'll be called"></label>
+              <label class="f" for="dcb-role">Your role<input type="text" id="dcb-role" name="role" placeholder="Founder, marketing lead, owner…"></label>
+            </div>
+            <div class="row">
+              <label class="f" for="dcb-site">Current website or social<input type="url" id="dcb-site" name="website" placeholder="https://"></label>
+              <label class="f" for="dcb-loc">Where are you based?<input type="text" id="dcb-loc" name="location" placeholder="City, state"></label>
+            </div>
+            <div>
+              <p class="q">Where are you right now?</p>
+              <div class="tiles" data-radio="stage"></div>
+            </div>
+            <label class="f" for="dcb-industry">Industry<input type="text" id="dcb-industry" name="industry" placeholder="Outdoor, hospitality, real estate, film, apparel…"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">02</span><h2>What do you need help with?</h2><p>Tick anything you'd like to talk about, then tell us when it matters: now, soon, or just exploring. Each piece is scoped on its own once we know what you need.</p></div>
+          <div class="step-body" id="dcb-services"></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">03</span><h2>What are you trying to make happen?</h2><p>The outcome matters more than the deliverable. This is where the strategy starts.</p></div>
+          <div class="step-body">
+            <div><p class="q">Goals · pick all that apply</p><div class="chips" data-check="goals"></div></div>
+            <label class="f" for="dcb-challenge">What's the main challenge or opportunity?<textarea id="dcb-challenge" name="challenge" placeholder="What's not working, what's changing, or what you're launching."></textarea></label>
+            <label class="f" for="dcb-success">A year from now, what does success look like?<textarea id="dcb-success" name="success" placeholder="More inquiries, a brand you're proud to hand out, a launch that lands…"></textarea></label>
+            <label class="f" for="dcb-audience">Who are you trying to reach?<textarea id="dcb-audience" name="audience" placeholder="Your ideal customer, client or audience, in a sentence or two."></textarea></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">04</span><h2>What do you already have?</h2><p>So we build on what's working instead of starting over.</p></div>
+          <div class="step-body">
+            <div><p class="q">Existing assets</p><div class="chips" data-check="assets"></div></div>
+            <div class="row">
+              <label class="f" for="dcb-admire">Brands you admire<textarea id="dcb-admire" name="admire" placeholder="Any industry. Tell us what you like about them."></textarea></label>
+              <label class="f" for="dcb-comp">Competitors or peers<textarea id="dcb-comp" name="competitors" placeholder="Who you're up against, or who you want to stand apart from."></textarea></label>
+            </div>
+            <label class="f" for="dcb-files">Link to files or inspiration<input type="url" id="dcb-files" name="files" placeholder="Drive, Dropbox, Figma, a Pinterest board…"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">05</span><h2>How would you like to work?</h2><p>Ranges help us recommend the right scope. Nothing here is a commitment.</p></div>
+          <div class="step-body">
+            <div><p class="q">Engagement</p><div class="tiles" data-radio="engagement"></div></div>
+            <div><p class="q">Investment range</p><div class="chips" data-radio="budget"></div></div>
+            <div><p class="q">Timing</p><div class="chips" data-radio="timeline"></div></div>
+            <label class="f" for="dcb-date">Any key date? (launch, event, season)<input type="text" id="dcb-date" name="keydate" placeholder="e.g. Open by Memorial Day"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="step">
+          <div class="step-head"><span class="step-n">06</span><h2>Last details.</h2><p>Then send it over.</p></div>
+          <div class="step-body">
+            <div class="row">
+              <div><p class="q">Best way to reach you</p><div class="chips" data-radio="contact"></div></div>
+              <label class="f" for="dcb-phone">Phone<input type="tel" id="dcb-phone" name="phone" autocomplete="tel" placeholder="If you'd like a call or text"></label>
+            </div>
+            <label class="f" for="dcb-heard">How did you find us?
+              <select id="dcb-heard" name="heard"><option value="">Choose one</option><option>Referral</option><option>Google search</option><option>Instagram</option><option>LinkedIn</option><option>Saw past work (TGR, Brain Farm, a client)</option><option>Other</option></select>
+            </label>
+            <label class="f" for="dcb-notes">Anything else<textarea id="dcb-notes" name="notes" placeholder="Questions for us, context, or anything that didn't fit above."></textarea></label>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="actions">
+              <button class="btn btn-go" type="submit" id="dcb-send">Send brief →</button>
+              <button class="btn btn-sm" type="button" id="dcb-copy">Copy my answers</button>
+              <button class="btn btn-sm" type="button" id="dcb-reset">Start over</button>
+            </div>
+            <p class="status" id="dcb-status" role="status" aria-live="polite"></p>
+          </div>
+        </fieldset>
+      </div>
+
+      <aside aria-label="Your brief so far">
+        <div class="sum" id="dcb-sum">
+          <div class="sum-h"><p>Your brief</p><b id="dcb-pct">0%</b></div>
+          <div class="meter" aria-hidden="true"><i id="dcb-meter"></i></div>
+          <div class="sum-row"><span>Client</span><div id="s-client" class="muted">—</div></div>
+          <div class="sum-row"><span>Services · <em id="s-count" style="font-style:normal">0</em></span><div class="stags" id="s-svcs"><span class="muted">Nothing selected yet</span></div></div>
+          <div class="sum-row"><span>Engagement</span><div id="s-eng" class="muted">—</div></div>
+          <div class="sum-row"><span>Investment</span><div id="s-bud" class="muted">—</div></div>
+          <div class="sum-row"><span>Timing</span><div id="s-time" class="muted">—</div></div>
+          <button class="btn btn-go" type="submit" form="dcb-form">Send brief →</button>
+        </div>
+        <p class="note">Saved on this device as you go. Close the page and pick up where you left off.</p>
+      </aside>
+    </form>
+  </div>
+
+  <div class="wrap done" id="dcb-done" role="status">
+    <svg class="mark" viewBox="0 0 750 255" aria-hidden="true"><path d="M279 26H26v203h253L463 26h261v203H470" fill="none" stroke="currentColor" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p class="eyebrow" style="justify-content:center">Brief received</p>
+    <h2>Thanks, <span id="dcb-done-name">friend</span>.</h2>
+    <p>Chris reads every brief personally and will be in touch soon with next steps and a time to talk.</p>
+    <div class="actions"><a class="btn" href="/">Back to Dunn Creative</a></div>
+  </div>
+
+  <div class="mbar" id="dcb-mbar"><span><b id="m-count">0</b> services · <span id="m-pct">0%</span> complete</span><button class="btn btn-go btn-sm" type="button" id="m-review">Review</button></div>
+</section>
+
+
+<script is:inline>
+(function(){
+"use strict";
+var ENDPOINT="https://formsubmit.co/ajax/chris@dunncreative.com",KEY="dc-brief-v1";
+var root=document.getElementById("dcb");if(!root)return;
+
+var SERVICES=JSON.parse(document.getElementById("dcb-data").textContent);
+SERVICES.push({g:"Not sure?",s:[["other","Something else","Have something in mind that isn't listed? Tell us."]]});
+var PRIO=[["now","Now"],["soon","Soon"],["exploring","Exploring"]];
+var OPTS={
+ stage:[["new","Launching something new","A new business, product or brand"],["growing","Growing","Working, and ready for the next level"],["established","Established","A known brand that needs a refresh"],["org","Nonprofit or organization","Mission-driven work"],["creator","Creator or personal brand","Athlete, filmmaker, artist, expert"],["partner","Agency or partner","Looking for a creative collaborator"]],
+ engagement:[["project","Single project","One defined deliverable with a clear finish line"],["phased","Phased build","Bigger work, delivered in stages"],["ongoing","Ongoing creative partner","A monthly creative team on call"],["advisory","Strategy & advisory","Direction and guidance, your team executes"],["unsure","Help me decide","Recommend what fits"]],
+ budget:[["u5","Under $5k"],["5-15","$5k–$15k"],["15-40","$15k–$40k"],["40+","$40k+"],["monthly","Monthly retainer"],["discuss","Prefer to discuss"]],
+ timeline:[["asap","ASAP"],["1-3","1–3 months"],["3-6","3–6 months"],["flex","Flexible"]],
+ contact:[["email","Email"],["call","Call"],["text","Text"]]
+};
+var CHECKS={
+ goals:["Launch something new","Look as good as we are","More leads & inquiries","Sell more online","Grow an audience","Rebrand or reposition","Pitch or raise money","Save time with AI"],
+ assets:["Logo","Brand guidelines","Website","Photography","Video footage","Written copy","Social accounts","Starting from scratch"]
+};
+
+function h(tag,a,kids){var e=document.createElement(tag);for(var k in a||{}){if(k==="text")e.textContent=a[k];else if(k==="cls")e.className=a[k];else e.setAttribute(k,a[k]);}(kids||[]).forEach(function(c){if(c!=null)e.appendChild(typeof c==="string"?document.createTextNode(c):c);});return e;}
+
+/* render services */
+var svcRoot=document.getElementById("dcb-services");
+SERVICES.forEach(function(G){
+  var grid=h("div",{cls:"svcs"});
+  G.s.forEach(function(s){
+    var id="svc-"+s[0];
+    var tick=h("span",{cls:"tick","aria-hidden":"true"});tick.innerHTML='<svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg>';
+    var main=h("label",{cls:"svc-main",for:id},[h("input",{type:"checkbox",id:id,name:id,"data-svc":s[0]}),h("div",null,[h("h3",{text:s[1]}),h("p",{text:s[2]})]),tick]);
+    var prio=h("div",{cls:"prio",role:"radiogroup","aria-label":"Priority for "+s[1]});
+    PRIO.forEach(function(p,i){prio.appendChild(h("label",null,[h("input",{type:"radio",name:"prio-"+s[0],value:p[0]}),h("span",{text:p[1]})]));});
+    var card=h("div",{cls:"svc",id:"card-"+s[0]},[main,prio]);
+    if(s[0]==="other")card.appendChild(h("div",{cls:"svc-other"},[h("input",{type:"text",id:"svc-other-text",name:"other_text",placeholder:"What do you have in mind?","aria-label":"Describe something else"})]));
+    grid.appendChild(card);
+  });
+  svcRoot.appendChild(h("div",{cls:"group"},[h("p",{cls:"group-t",text:G.g}),grid]));
+});
+/* render radios + checks */
+root.querySelectorAll("[data-radio]").forEach(function(box){
+  var key=box.getAttribute("data-radio"),tile=box.classList.contains("tiles");
+  OPTS[key].forEach(function(o){
+    var inp=h("input",{type:"radio",name:key,value:o[0]});
+    box.appendChild(tile?h("label",{cls:"tile"},[inp,h("span",null,[h("b",{text:o[1]}),h("small",{text:o[2]})])]):h("label",{cls:"chip"},[inp,h("span",{text:o[1]})]));
+  });
+});
+root.querySelectorAll("[data-check]").forEach(function(box){
+  var key=box.getAttribute("data-check");
+  CHECKS[key].forEach(function(o,i){box.appendChild(h("label",{cls:"chip"},[h("input",{type:"checkbox",name:key+"-"+i,value:o,"data-group":key}),h("span",{text:o})]));});
+});
+
+/* state */
+var form=document.getElementById("dcb-form");
+function fields(){return [].slice.call(form.querySelectorAll("input,textarea,select")).filter(function(f){return f.name&&f.name!=="_honey";});}
+function save(){var d={};fields().forEach(function(f){if(f.type==="checkbox")d[f.name]=f.checked;else if(f.type==="radio"){if(f.checked)d[f.name]=f.value;}else d[f.name]=f.value;});try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+function load(){var d;try{d=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){d=null;}if(!d)return;
+  fields().forEach(function(f){if(!(f.name in d))return;if(f.type==="checkbox")f.checked=!!d[f.name];else if(f.type==="radio")f.checked=d[f.name]===f.value;else f.value=d[f.name];});}
+function val(n){var f=form.elements[n];if(!f)return"";if(f instanceof RadioNodeList||f.length&&f[0]&&f[0].type==="radio"){for(var i=0;i<f.length;i++)if(f[i].checked)return f[i].value;return"";}return (f.value||"").trim();}
+function label(key,v){var o=(OPTS[key]||[]).filter(function(x){return x[0]===v;})[0];return o?o[1]:"";}
+function picked(){var out=[];SERVICES.forEach(function(G){G.s.forEach(function(s){var c=document.getElementById("svc-"+s[0]);if(c&&c.checked)out.push({id:s[0],name:s[1],prio:val("prio-"+s[0])});});});return out;}
+function checks(g){return [].slice.call(form.querySelectorAll('[data-group="'+g+'"]:checked')).map(function(x){return x.value;});}
+
+function paint(){
+  var sv=picked();
+  SERVICES.forEach(function(G){G.s.forEach(function(s){var c=document.getElementById("svc-"+s[0]);document.getElementById("card-"+s[0]).classList.toggle("on",c.checked);});});
+  var client=[val("name"),val("company")].filter(Boolean).join(" · ");
+  setTxt("s-client",client);
+  var tags=document.getElementById("s-svcs");tags.innerHTML="";
+  if(!sv.length)tags.appendChild(h("span",{cls:"muted",text:"Nothing selected yet"}));
+  sv.forEach(function(s){var t=h("span",{cls:"stag"},[s.name]);if(s.prio)t.appendChild(h("i",{text:(PRIO.filter(function(p){return p[0]===s.prio;})[0]||[,s.prio])[1]}));tags.appendChild(t);});
+  document.getElementById("s-count").textContent=sv.length;
+  setTxt("s-eng",label("engagement",val("engagement")));
+  setTxt("s-bud",label("budget",val("budget")));
+  setTxt("s-time",[label("timeline",val("timeline")),val("keydate")].filter(Boolean).join(" · "));
+  /* completeness: 10 signals */
+  var sig=[val("name")&&val("email"),val("company"),val("stage"),sv.length,checks("goals").length,val("challenge"),val("success")||val("audience"),checks("assets").length,val("engagement"),val("budget")&&val("timeline")];
+  var pct=Math.round(sig.filter(Boolean).length/sig.length*100);
+  document.getElementById("dcb-pct").textContent=pct+"%";document.getElementById("dcb-meter").style.width=pct+"%";
+  document.getElementById("m-count").textContent=sv.length;document.getElementById("m-pct").textContent=pct+"%";
+}
+function setTxt(id,t){var e=document.getElementById(id);e.textContent=t||"—";e.classList.toggle("muted",!t);}
+
+form.addEventListener("change",function(e){
+  var f=e.target;
+  if(f.dataset&&f.dataset.svc&&f.checked&&!val("prio-"+f.dataset.svc)){var first=form.querySelector('input[name="prio-'+f.dataset.svc+'"][value="now"]');if(first)first.checked=true;}
+  paint();save();
+});
+form.addEventListener("input",function(e){if(e.target.classList)e.target.classList.remove("invalid");paint();save();});
+
+/* compile */
+function compile(){
+  var L=[],sv=picked();
+  L.push("DUNN CREATIVE · PROJECT BRIEF","");
+  L.push("== CONTACT ==");
+  [["Name","name"],["Email","email"],["Phone","phone"],["Company","company"],["Role","role"],["Website","website"],["Location","location"],["Industry","industry"]].forEach(function(p){if(val(p[1]))L.push(p[0]+": "+val(p[1]));});
+  if(val("stage"))L.push("Stage: "+label("stage",val("stage")));
+  if(val("contact"))L.push("Prefers: "+label("contact",val("contact")));
+  L.push("","== SERVICES ==");
+  if(sv.length)sv.forEach(function(s){L.push("• "+s.name+(s.prio?" ("+PRIO.filter(function(p){return p[0]===s.prio;})[0][1]+")":"")+(s.id==="other"&&val("other_text")?": "+val("other_text"):""));});else L.push("(none selected)");
+  L.push("","== GOALS ==");L.push(checks("goals").join(", ")||"(none)");
+  [["Challenge","challenge"],["Success in a year","success"],["Audience","audience"]].forEach(function(p){if(val(p[1]))L.push("",p[0]+":",val(p[1]));});
+  L.push("","== WHAT THEY HAVE ==");L.push(checks("assets").join(", ")||"(none)");
+  [["Admires","admire"],["Competitors","competitors"],["Files / inspiration","files"]].forEach(function(p){if(val(p[1]))L.push("",p[0]+":",val(p[1]));});
+  L.push("","== ENGAGEMENT ==");
+  L.push("Model: "+(label("engagement",val("engagement"))||"—"));
+  L.push("Investment: "+(label("budget",val("budget"))||"—"));
+  L.push("Timing: "+(label("timeline",val("timeline"))||"—")+(val("keydate")?" · Key date: "+val("keydate"):""));
+  if(val("heard"))L.push("","Found us via: "+val("heard"));
+  if(val("notes"))L.push("","== ANYTHING ELSE ==",val("notes"));
+  return L.join("\n");
+}
+
+/* send */
+var status=document.getElementById("dcb-status");
+function say(t,err){status.innerHTML=t;status.classList.toggle("err",!!err);}
+form.addEventListener("submit",async function(e){
+  e.preventDefault();
+  if(form.elements._honey.value)return;
+  var bad=[];var n=form.elements.name,m=form.elements.email;
+  if(!n.value.trim())bad.push(n);
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m.value.trim()))bad.push(m);
+  if(bad.length){bad.forEach(function(f){f.classList.add("invalid");});bad[0].scrollIntoView({behavior:"smooth",block:"center"});setTimeout(function(){bad[0].focus({preventScroll:true});},350);say("Add your name and a valid email so we can reply.",true);return;}
+  var btns=root.querySelectorAll('button[type=submit]');btns.forEach(function(b){b.disabled=true;});say("Sending…");
+  var sv=picked();
+  try{
+    var r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({
+      _subject:"New project brief: "+(val("company")||val("name")),_replyto:val("email"),_template:"box",_captcha:"false",
+      name:val("name"),email:val("email"),company:val("company"),services:sv.map(function(s){return s.name;}).join(", "),
+      budget:label("budget",val("budget")),timeline:label("timeline",val("timeline")),brief:compile()})});
+    var j={};try{j=await r.json();}catch(_){}
+    if(!r.ok||String(j.success)==="false")throw new Error(j.message||"failed");
+    try{localStorage.removeItem(KEY);}catch(_){}
+    document.getElementById("dcb-done-name").textContent=val("name").split(" ")[0]||"friend";
+    document.getElementById("dcb-form-wrap").style.display="none";
+    document.getElementById("dcb-mbar").style.display="none";
+    var done=document.getElementById("dcb-done");done.classList.add("show");root.scrollIntoView({behavior:"smooth"});
+  }catch(err){
+    say('Couldn\'t send from here. Press <b>Copy my answers</b> and email them to <a href="mailto:chris@dunncreative.com?subject=Project%20brief">chris@dunncreative.com</a>. Your answers are saved.',true);
+  }
+  btns.forEach(function(b){b.disabled=false;});
+});
+
+document.getElementById("dcb-copy").addEventListener("click",async function(){
+  var t=compile();
+  try{await navigator.clipboard.writeText(t);say("Copied. Paste it into an email to chris@dunncreative.com.");}
+  catch(_){var ta=document.createElement("textarea");ta.value=t;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");say("Copied.");}catch(__){say("Couldn't copy here.",true);}ta.remove();}
+});
+document.getElementById("dcb-reset").addEventListener("click",function(){
+  if(!confirm("Clear every answer and start over?"))return;
+  form.reset();try{localStorage.removeItem(KEY);}catch(_){}paint();say("");window.scrollTo({top:root.offsetTop,behavior:"smooth"});
+});
+
+/* mobile bar */
+var mbar=document.getElementById("dcb-mbar"),sum=document.getElementById("dcb-sum");
+document.getElementById("m-review").addEventListener("click",function(){sum.scrollIntoView({behavior:"smooth",block:"center"});});
+if("IntersectionObserver" in window){
+  var svcVis=false,sumVis=false;
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.target===sum)sumVis=x.isIntersecting;else svcVis=x.isIntersecting||x.boundingClientRect.top<0;});mbar.classList.toggle("show",svcVis&&!sumVis);},{threshold:0});
+  io.observe(svcRoot);io.observe(sum);
+}
+
+load();paint();
+})();
+</script>
+</BaseLayout>
