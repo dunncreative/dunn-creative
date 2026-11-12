@@ -31,6 +31,8 @@ const {
 
 const allWork = await getCollection('work');
 const related = allWork.filter((p) => relatedProjects.includes(p.slug));
+// Pre-selects this service on the /start brief form.
+const serviceSlug = Astro.url.pathname.split('/').filter(Boolean).pop();
 ---
 
 <BaseLayout title={`${title} — Dunn Creative`} description={description ?? tagline}>
@@ -91,7 +93,7 @@ const related = allWork.filter((p) => relatedProjects.includes(p.slug));
           </div>
         )}
 
-        <a href="/contact" class="btn btn-primary fade-up justify-center">
+        <a href={`/start?service=${serviceSlug}`} class="btn btn-primary fade-up justify-center">
           Start a project
         </a>
       </aside>

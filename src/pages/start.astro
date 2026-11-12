@@ -441,7 +441,11 @@ if("IntersectionObserver" in window){
   io.observe(svcRoot);io.observe(sum);
 }
 
-load();paint();
+load();
+/* ?service=<slug> from a service page pre-selects that service */
+try{var pre=new URLSearchParams(location.search).get("service");var box=pre&&document.getElementById("svc-"+pre);
+  if(box&&!box.checked){box.checked=true;var nowR=form.querySelector('input[name="prio-'+pre+'"][value="now"]');if(nowR&&!val("prio-"+pre))nowR.checked=true;save();}}catch(_){}
+paint();
 })();
 </script>
 </PageLayout>
