@@ -149,7 +149,7 @@ const process = [
     color: var(--color-accent-soft);
   }
   #form-status.is-error {
-    color: #ff8a8a;
+    color: #b45309;
   }
 </style>
 
@@ -195,13 +195,16 @@ const process = [
           }),
         });
         const json = await res.json().catch(() => ({}));
-        if (!res.ok || String((json as { success?: unknown }).success) === 'false') {
-          throw new Error('Request failed');
+        const j = json as { success?: unknown; message?: string };
+        if (!res.ok || String(j.success) === 'false') {
+          throw new Error(j.message || 'Request failed');
         }
         form.reset();
         show("Thanks — your message is in. We'll reply within one business day.", 'success');
-      } catch {
-        show('Something went wrong. Please email chris@dunncreative.com instead.', 'error');
+      } catch (err) {
+        const reason = err instanceof Error && err.message !== 'Request failed' ? ` (${err.message})` : '';
+        show(`Something went wrong${reason}. Please email chris@dunncreative.com instead.`, 'error');
+        console.error('Contact form:', err);
       } finally {
         button.disabled = false;
         button.textContent = original;

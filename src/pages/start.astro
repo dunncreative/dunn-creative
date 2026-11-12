@@ -417,7 +417,8 @@ form.addEventListener("submit",async function(e){
     document.getElementById("dcb-mbar").style.display="none";
     var done=document.getElementById("dcb-done");done.classList.add("show");root.scrollIntoView({behavior:"smooth"});
   }catch(err){
-    say('Couldn\'t send from here. Press <b>Copy my answers</b> and email them to <a href="mailto:chris@dunncreative.com?subject=Project%20brief">chris@dunncreative.com</a>. Your answers are saved.',true);
+    if(window.console)console.error("Brief form:",err);
+    say((err&&err.message&&err.message!=="failed"?"<b>"+String(err.message).replace(/[<>&]/g,"")+"</b><br>":"")+'Couldn\'t send from here. Press <b>Copy my answers</b> and email them to <a href="mailto:chris@dunncreative.com?subject=Project%20brief">chris@dunncreative.com</a>. Your answers are saved.',true);
   }
   btns.forEach(function(b){b.disabled=false;});
 });
