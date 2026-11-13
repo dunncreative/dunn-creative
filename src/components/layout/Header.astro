@@ -1,6 +1,5 @@
 ---
 import Nav from './Nav.astro';
-import Lockup from '../brand/Lockup.astro';
 ---
 
 <header
@@ -9,16 +8,19 @@ import Lockup from '../brand/Lockup.astro';
   class="fixed inset-x-0 top-0 z-50 border-b border-transparent text-ink transition-all duration-300"
 >
   <div class="container flex h-[var(--header-h)] items-center justify-between">
-    <a href="/" class="flex items-center text-white" aria-label="Dunn Creative home">
-      <Lockup />
+    <a href="/" class="flex items-center" aria-label="Dunn Creative home">
+      <img
+        src="/images/brand/dunn-creative-logo-white.png"
+        alt="Dunn Creative"
+        width="968"
+        height="461"
+        class="h-10 w-auto"
+      />
     </a>
 
     <Nav />
 
     <div class="flex items-center gap-3">
-      <a href="/start" class="btn btn-ghost hidden sm:inline-flex">
-        Start a project
-      </a>
       <button
         id="menu-toggle"
         class="flex h-10 w-10 items-center justify-center rounded-sm border border-line text-ink md:hidden"
@@ -38,9 +40,6 @@ import Lockup from '../brand/Lockup.astro';
   >
     <div class="container py-6">
       <Nav mobile />
-      <a href="/start" class="btn btn-primary mt-6 w-full justify-center">
-        Start a project
-      </a>
     </div>
   </div>
 </header>

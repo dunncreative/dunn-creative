@@ -1,6 +1,4 @@
 ---
-import Lockup from '../brand/Lockup.astro';
-
 const year = new Date().getFullYear();
 
 const serviceLinks = [
@@ -29,8 +27,14 @@ const social = [
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand -->
       <div>
-        <a href="/" class="flex items-center text-ink" aria-label="Dunn Creative home">
-          <Lockup />
+        <a href="/" class="flex items-center" aria-label="Dunn Creative home">
+          <img
+            src="/images/brand/dunn-creative-logo-black.png"
+            alt="Dunn Creative"
+            width="968"
+            height="461"
+            class="h-10 w-auto"
+          />
         </a>
         <p class="mt-4 max-w-xs text-sm text-ink-dim">
           An independent studio building brands, websites, and content with an
