@@ -4,10 +4,19 @@
      CSS color-mix/var() and Tailwind's `rgb(... / <alpha-value>)`
      opacity modifiers. Named vars below resolve the triplets.
      Default = LIGHT theme. Add data-theme="dark" to any element
-     (header, hero bands, CTA bands) to flip its subtree to dark. */
-  --color-accent-rgb: 8 150 154;
-  --color-accent-soft-rgb: 13 138 141;
-  --color-accent-dim-rgb: 6 110 113;
+     (header, hero bands, CTA bands) to flip its subtree to dark.
+
+     Brand rule (Logo, button and colour rules board, approved 2026-11-12):
+     teal #1AA6AA is an ACCENT only. --color-accent is the teal used for
+     text, rules and borders: #10777A on light (readable small text),
+     #1AA6AA on dark. --color-accent-fill is the solid teal for the one
+     primary button per view. #00C2C7 is retired. */
+  --color-accent-fill: #1aa6aa;
+  --color-accent-fill-hover: #17959a;
+  --color-on-accent: #0b0b0c;
+  --color-accent-rgb: 16 119 122;
+  --color-accent-soft-rgb: 16 119 122;
+  --color-accent-dim-rgb: 11 92 94;
 
   --color-bg-rgb: 250 250 250;
   --color-surface-rgb: 255 255 255;
@@ -75,7 +84,9 @@
   /* ── Shadow ────────────────────────────────────────── */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 14px 40px -20px rgba(0, 0, 0, 0.22);
-  --shadow-glow: 0 0 60px -12px rgba(0, 194, 199, 0.35);
+  /* Teal glows are retired (brand rule: no teal glows or gradients).
+     Kept as a neutral shadow so existing `shadow-glow` usages still work. */
+  --shadow-glow: 0 14px 40px -20px rgba(0, 0, 0, 0.22);
 
   /* ── Layout ────────────────────────────────────────── */
   --container: 1200px;
@@ -90,9 +101,9 @@
    directly (not via the triplets) because :root already resolved
    the indirection to the light values and inherits that down. */
 [data-theme='dark'] {
-  --color-accent-rgb: 0 194 199;
-  --color-accent-soft-rgb: 51 209 213;
-  --color-accent-dim-rgb: 10 138 141;
+  --color-accent-rgb: 26 166 170;
+  --color-accent-soft-rgb: 26 166 170;
+  --color-accent-dim-rgb: 16 119 122;
 
   --color-bg-rgb: 13 13 13;
   --color-surface-rgb: 26 26 26;
@@ -103,9 +114,9 @@
   --color-ink-soft-rgb: 180 180 180;
   --color-ink-dim-rgb: 122 122 122;
 
-  --color-accent: rgb(0 194 199);
-  --color-accent-soft: rgb(51 209 213);
-  --color-accent-dim: rgb(10 138 141);
+  --color-accent: rgb(26 166 170);
+  --color-accent-soft: rgb(26 166 170);
+  --color-accent-dim: rgb(16 119 122);
 
   --color-bg: rgb(13 13 13);
   --color-surface: rgb(26 26 26);
@@ -123,9 +134,9 @@
    Same as the default, but available explicitly to force a
    light subtree inside a dark one. */
 [data-theme='light'] {
-  --color-accent-rgb: 8 150 154;
-  --color-accent-soft-rgb: 13 138 141;
-  --color-accent-dim-rgb: 6 110 113;
+  --color-accent-rgb: 16 119 122;
+  --color-accent-soft-rgb: 16 119 122;
+  --color-accent-dim-rgb: 11 92 94;
 
   --color-bg-rgb: 250 250 250;
   --color-surface-rgb: 255 255 255;
@@ -136,9 +147,9 @@
   --color-ink-soft-rgb: 82 82 91;
   --color-ink-dim-rgb: 113 113 122;
 
-  --color-accent: rgb(8 150 154);
-  --color-accent-soft: rgb(13 138 141);
-  --color-accent-dim: rgb(6 110 113);
+  --color-accent: rgb(16 119 122);
+  --color-accent-soft: rgb(16 119 122);
+  --color-accent-dim: rgb(11 92 94);
 
   --color-bg: rgb(250 250 250);
   --color-surface: rgb(255 255 255);

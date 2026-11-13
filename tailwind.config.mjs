@@ -28,7 +28,8 @@ export default {
         card: '14px',
       },
       boxShadow: {
-        glow: '0 0 60px -12px rgba(0, 194, 199, 0.35)',
+        // Teal glow retired (brand rule); neutral shadow keeps `shadow-glow` working.
+        glow: 'var(--shadow-glow)',
       },
     },
   },

@@ -1,5 +1,6 @@
 ---
 import Nav from './Nav.astro';
+import Lockup from '../brand/Lockup.astro';
 ---
 
 <header
@@ -8,15 +9,14 @@ import Nav from './Nav.astro';
   class="fixed inset-x-0 top-0 z-50 border-b border-transparent text-ink transition-all duration-300"
 >
   <div class="container flex h-[var(--header-h)] items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight" aria-label="Dunn Creative home">
-      <span class="inline-block h-2.5 w-2.5 rounded-full bg-accent"></span>
-      Dunn&nbsp;Creative
+    <a href="/" class="flex items-center text-white" aria-label="Dunn Creative home">
+      <Lockup />
     </a>
 
     <Nav />
 
     <div class="flex items-center gap-3">
-      <a href="/start" class="btn btn-primary hidden sm:inline-flex">
+      <a href="/start" class="btn btn-ghost hidden sm:inline-flex">
         Start a project
       </a>
       <button
