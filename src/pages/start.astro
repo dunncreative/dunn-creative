@@ -136,7 +136,7 @@ const groups = GROUPS.map(([cat, label]) => ({
 /* done */
 #dcb .done{display:none;padding:var(--space-16) 0 var(--space-24);text-align:center}
 #dcb .done.show{display:block}
-#dcb .done .mark{width:72px;height:auto;color:var(--color-accent);display:block;margin:0 auto var(--space-8)}
+#dcb .done .mark{width:72px;height:auto;color:var(--color-ink);display:block;margin:0 auto var(--space-8)}
 #dcb .done h2{font-size:var(--text-3xl);color:var(--color-ink)}
 #dcb .done p{color:var(--color-ink-soft);max-width:52ch;margin:var(--space-4) auto 0}
 #dcb .done .actions{justify-content:center;margin-top:var(--space-8)}
@@ -261,7 +261,7 @@ const groups = GROUPS.map(([cat, label]) => ({
           <div class="sum-row"><span>Engagement</span><div id="s-eng" class="muted">—</div></div>
           <div class="sum-row"><span>Investment</span><div id="s-bud" class="muted">—</div></div>
           <div class="sum-row"><span>Timing</span><div id="s-time" class="muted">—</div></div>
-          <button class="btn btn-primary" type="submit" form="dcb-form">Send brief →</button>
+          <button class="btn btn-ghost" type="submit" form="dcb-form">Send brief →</button>
         </div>
         <p class="note">Saved on this device as you go. Close the page and pick up where you left off.</p>
       </aside>
@@ -276,7 +276,7 @@ const groups = GROUPS.map(([cat, label]) => ({
     <div class="actions"><a class="btn btn-ghost" href="/work">See our work</a><a class="btn btn-primary" href="/services">Explore services</a></div>
   </div>
 
-  <div class="mbar" id="dcb-mbar"><span><b id="m-count">0</b> services · <span id="m-pct">0%</span> complete</span><button class="btn btn-primary" type="button" id="m-review">Review</button></div>
+  <div class="mbar" id="dcb-mbar"><span><b id="m-count">0</b> services · <span id="m-pct">0%</span> complete</span><button class="btn btn-ghost" type="button" id="m-review">Review</button></div>
 </div>
 </section>
 <script is:inline>

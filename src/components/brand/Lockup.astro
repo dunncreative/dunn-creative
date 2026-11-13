@@ -1,0 +1,52 @@
+---
+// Dunn Creative lockup: symbol + "DUNN CREATIVE", per the approved
+// 'Logo, button and colour rules' board (2026-11-12).
+// Colour follows currentColor: white on dark, black on light. Never teal.
+//
+// The symbol path is the one already used in this repo
+// (src/pages/start.astro, brief-received state) and on the approved board.
+// TODO(Freeman): confirm it matches the official symbol, or swap in the
+// exported file from Dropbox 00_Brand-Brain/Dunn-Creative-Logos/
+// Dunn-Creative-Logo-Symbol-Only (White / Black). Suggested paths:
+// public/images/brand/dc-symbol-white.svg and dc-symbol-black.svg.
+export interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class={`dc-lockup ${className}`}>
+  <svg class="dc-lockup__symbol" viewBox="0 0 750 255" aria-hidden="true" focusable="false">
+    <path
+      d="M279 26H26v203h253L463 26h261v203H470"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="52"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <span class="dc-lockup__word">DUNN CREATIVE</span>
+</span>
+
+<style>
+  .dc-lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    color: inherit;
+    line-height: 1;
+  }
+  .dc-lockup__symbol {
+    width: 62px;
+    height: 21px;
+    display: block;
+  }
+  .dc-lockup__word {
+    font-family: var(--font-sans);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+  }
+</style>

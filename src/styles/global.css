@@ -49,8 +49,8 @@
   }
 
   ::selection {
-    background: var(--color-accent);
-    color: #06181a;
+    background: var(--color-accent-fill);
+    color: var(--color-on-accent);
   }
 
   :focus-visible {
@@ -125,21 +125,24 @@
   .btn:hover {
     transform: translateY(-1px);
   }
+  /* Button rule: ONE solid teal .btn-primary per view. Every other
+     button is .btn-ghost: outlined, black on light, white on dark. */
   .btn-primary {
-    background: var(--color-accent);
-    color: #06181a;
+    background: var(--color-accent-fill);
+    color: var(--color-on-accent);
   }
   .btn-primary:hover {
-    background: var(--color-accent-soft);
+    background: var(--color-accent-fill-hover);
   }
   .btn-ghost {
     background: transparent;
-    border-color: var(--color-line);
+    border-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
     color: var(--color-ink);
   }
   .btn-ghost:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-bg);
   }
 
   /* Tags */
@@ -207,16 +210,10 @@
    Utilities
    ───────────────────────────────────────────────────────── */
 @layer utilities {
+  /* Interim style pass: teal gradients are retired, so headlines that
+     used .gradient-text now render as solid ink (white on dark). */
   .gradient-text {
-    background: linear-gradient(
-      100deg,
-      var(--color-ink) 0%,
-      var(--color-ink) 40%,
-      var(--color-accent-soft) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-ink);
   }
 
   /* Scroll-reveal animation */
